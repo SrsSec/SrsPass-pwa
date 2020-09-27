@@ -1,4 +1,10 @@
+// TODO consider recovery/sync as terminology?
+// internally we'll refer to it as mnemonic
+export const mnemonicTerm = 'backup phrase'
+export const mnemonicHtml = `<strong>${mnemonicTerm}</strong>`
+
 export const someMsg = `Testing 1234`
+
 export const popUpWelcome = {
   title: 'Welcome!'
   , message : `This seems to be your first visit.

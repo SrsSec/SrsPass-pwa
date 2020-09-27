@@ -1,5 +1,6 @@
 <script>
   import { fade } from 'svelte/transition';
+  import { childLockNext, childLockPrev } from '@store/firstVisitNav.js'
 
   let idx = 0
   function overlay_click(e) {
@@ -8,7 +9,7 @@
   }
 
   export let title
-  , bodies = [5,9,2]
+  , bodies = []
   , show = false
 
   let visible = show
@@ -20,8 +21,8 @@
       <div class="modal-container center">
         <h2>{@html title}</h2>
         <main><svelte:component this={bodies[idx]} /></main>
-        <button disabled={idx < 1} on:click={() => idx--}>Prev</button>
-        <button disabled={idx >= bodies.length - 1} on:click={() => idx++}>Next</button>
+        <button disabled={$childLockPrev || idx < 1} on:click={() => idx--}>Prev</button>
+        <button disabled={$childLockNext || idx >= bodies.length - 1} on:click={() => idx++}>Next</button>
       </div>
     </div>
   </div>

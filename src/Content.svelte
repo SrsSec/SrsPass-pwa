@@ -7,8 +7,16 @@
   import * as constant from '@/constants.js'
   import NavModal from '@modal/NavModal.svelte'
   import WelcomeMsg from '@modal/firstVisit/WelcomeMsg.svelte'
-  import ImportSeed from '@modal/firstVisit/ImportSeed.svelte'
-  import GenerateSeed from '@modal/firstVisit/GenerateSeed.svelte'
+  import ImportMnemonic from '@modal/firstVisit/ImportMnemonic.svelte'
+  import GenerateMnemonic from '@modal/firstVisit/GenerateMnemonic.svelte'
+  import VerifyMnemonic from '@modal/firstVisit/VerifyMnemonic.svelte'
+
+  const firstVisitSteps = [
+    WelcomeMsg,
+    ImportMnemonic,
+    GenerateMnemonic,
+    VerifyMnemonic,
+  ]
 
   const { open } = getContext('simple-modal')
 
@@ -35,4 +43,4 @@
 </script>
 
 <InputPass/>
-<NavModal title='test' bodies={[WelcomeMsg, ImportSeed, GenerateSeed]} show=true/>
+<NavModal title='test' bodies={firstVisitSteps} show=true/>
