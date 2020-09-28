@@ -2,12 +2,21 @@
   import { onMount } from 'svelte'
   import { mnemonic } from '@store/mnemonic.js'
   import { validateMnemonic } from 'bip39'
-  import { mnemonicTerm, mnemonicHtml } from '@/constants.js'
+  import { verifySuccess, mnemonicHtml } from '@/constants.js'
   import { childLockNext, childLockPrev } from '@store/firstVisitNav.js'
+
+  //TODO remove
+  const DEBUG = true
 
   // lock navigation on mount, and return a bound function which unlocks
   // this returned function will be run onDestroy lifetime
   onMount(() => setNav(true) && setNav.bind(null, false))
+
+  const mnemonicArray = $mnemonic.split(' ')
+  const mixedArray = Array(...Array(mnemonicArray.length).keys())
+    .sort(() => Math.random() - .5)
+  let ctr = 0
+  let wordUser = ''
 
   function setNav(lock) {
     childLockPrev.set(lock)
@@ -16,23 +25,40 @@
   }
   
   function handleVerify() {
-    alert(mnemonicUser === $mnemonic)
+    if (!isWordUserValid) return
+    ctr++
+    if (verified) childLockNext.set(false)
+    else wordUser = ''
   }
 
-  let mnemonicUser = ''
-  $: isMnemonicUserValid = validateMnemonic(mnemonicUser)
+  function handleKeydown(evt) {
+    const { key, keyCode } = evt
+    if (key === 'Enter' || keyCode === 13) {
+      evt.preventDefault()
+      handleVerify()
+    }
+  }
+
+  $: wordIdx = mixedArray[ctr]
+  $: currentWord = mnemonicArray[wordIdx]
+  $: isWordUserValid = wordUser.trim() === currentWord
+  // could lessen required verified words by passing something lower than menmonic length
+  // TODO research if we should do whole phrase, based on user feedback and safety...
+  $: verified = DEBUG ? ctr >= 1 : ctr >= mnemonicArray.length
+  $: placeholder = verified ?
+      verifySuccess :
+      `Enter Word #${wordIdx + 1} then hit verify or enter!`
+
 </script>
 
+<svelte:window on:keydown={handleKeydown}/>
 <p>
-  Please verify your {@html mnemonicTerm} phrase here! TODO test the order of the phrase by shuffling it around
+  Please verify your {@html mnemonicHtml} phrase here. Enter the word requested in the box!
 </p>
-<textarea class:red-border="{mnemonicUser.length > 0 && !isMnemonicUserValid}" placeholder="Enter your {mnemonicTerm} here..." bind:value={mnemonicUser}/>
-<button disabled={!isMnemonicUserValid} on:click={handleVerify}>
+<textarea on:keypress={handleVerify} disabled={verified} class:red-border="{wordUser.length > 0 && !isWordUserValid && !verified}" {placeholder} bind:value={wordUser}/>
+<button disabled={!isWordUserValid} on:click={handleVerify}>
   Verify
 </button>
-<p>
-  {isMnemonicUserValid}
-</p>
 
 <style>
   .red-border {

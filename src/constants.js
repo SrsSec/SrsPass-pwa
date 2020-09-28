@@ -2,6 +2,7 @@
 // internally we'll refer to it as mnemonic
 export const mnemonicTerm = 'backup phrase'
 export const mnemonicHtml = `<strong>${mnemonicTerm}</strong>`
+export const verifySuccess = `Verification complete! Make sure to keep your ${mnemonicTerm} stored for future use.`
 
 export const someMsg = `Testing 1234`
 
