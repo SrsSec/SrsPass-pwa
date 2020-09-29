@@ -1,11 +1,33 @@
 <script>
   import { fade } from 'svelte/transition';
-  import { childLockNext, childLockPrev } from '@store/firstVisitNav.js'
+  import {
+    childLockNext,
+    childLockPrev,
+    childFocus,
+    childTitle
+  } from '@store/firstVisitNav.js'
 
   let idx = 0
   function overlay_click(e) {
     if ('close' in e.target.dataset)
       show = false;
+  }
+
+  $: lockPrev = () => $childLockPrev || idx < 1
+  $: lockNext = () => $childLockNext || idx >= bodies.length - 1
+
+  // add vim key nav
+  function handleKeydown(evt) {
+    if (!show || $childFocus) return
+    const { key, keyCode } = evt
+    if (!lockPrev() && (key === 'h' || keyCode === 72)) {
+      evt.preventDefault()
+      return idx--
+    }
+    if (!lockNext() && (key === 'l' || keyCode === 76)) {
+      evt.preventDefault()
+      return idx++
+    }
   }
 
   export let title
@@ -15,14 +37,15 @@
   let visible = show
 </script>
 
+<svelte:window on:keydown={handleKeydown}/>
 {#if show}
   <div>
     <div class="modal-overlay" data-close on:click={overlay_click} transition:fade={{duration: 1500}}>
       <div class="modal-container center">
-        <h2>{@html title}</h2>
+        <h2>{$childTitle || title}</h2>
         <main><svelte:component this={bodies[idx]} /></main>
-        <button disabled={$childLockPrev || idx < 1} on:click={() => idx--}>Prev</button>
-        <button disabled={$childLockNext || idx >= bodies.length - 1} on:click={() => idx++}>Next</button>
+        <button disabled={lockPrev()} on:click={() => idx--}>Prev</button>
+        <button disabled={lockNext()} on:click={() => idx++}>Next</button>
       </div>
     </div>
   </div>

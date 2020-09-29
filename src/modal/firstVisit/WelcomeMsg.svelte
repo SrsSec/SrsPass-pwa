@@ -1,5 +1,10 @@
 <script>
+  import { onMount, onDestroy } from 'svelte'
   import { mnemonicHtml } from '@/constants.js'
+  import { childTitle } from '@store/firstVisitNav'
+
+  onMount(() => childTitle.set('Welcome!'))
+  onDestroy(() => childTitle.set(null))
 </script>
 <p>This seems to be your first visit.
 Let's begin with a quick setup to get you going...</p>

@@ -1,7 +1,12 @@
 <script>
+  import { onMount, onDestroy } from 'svelte'
   import { mnemonic } from '@store/mnemonic.js'
   import { validateMnemonic } from 'bip39'
   import { mnemonicTerm, mnemonicHtml } from '@/constants.js'
+  import { childFocus, childTitle, childLockNext } from '@store/firstVisitNav'
+
+  onMount(() => childTitle.set('Existing User?'))
+  onDestroy(() => childTitle.set(null))
 
   function handleImport() {
     mnemonic.overwrite(mnemonicUser)
@@ -9,12 +14,13 @@
 
   let mnemonicUser = ''
   $: isMnemonicUserValid = validateMnemonic(mnemonicUser)
+  $: mnemonicUser.length > 0 ? childLockNext.set(true) : childLockNext.set(false)
 </script>
 
 <p>
   If you have your own {@html mnemonicHtml} already, you may import it here, or continue to the next step to generate one
 </p>
-<textarea class:red-border="{mnemonicUser.length > 0 && !isMnemonicUserValid}" placeholder="Enter your {mnemonicTerm} here..." bind:value={mnemonicUser}/>
+<textarea on:focus={() => childFocus.set(true)} on:blur={() => childFocus.set(false)} class:red-border="{mnemonicUser.length > 0 && !isMnemonicUserValid}" placeholder="Enter your {mnemonicTerm} here..." bind:value={mnemonicUser}/>
 <button disabled={!isMnemonicUserValid} on:click={handleImport}>
   Import
 </button>

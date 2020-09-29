@@ -22,6 +22,7 @@
     getLocalStoredSeed() ||
     generateNewSeedAndStore())
 
+  // TODO remove
   // should be what longest possible seed may look like
   const fakeSeed = "longword wordlong longword wordlong longword wordlong longword wordlong longword wordlong longword wordlong"
 

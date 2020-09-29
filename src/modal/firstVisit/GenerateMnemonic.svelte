@@ -1,6 +1,11 @@
 <script>
+  import { onMount, onDestroy } from 'svelte'
   import { mnemonic } from '@store/mnemonic.js'
   import { mnemonicHtml } from '@/constants.js'
+  import { childTitle } from '@store/firstVisitNav'
+
+  onMount(() => childTitle.set(`Let's set you up!`))
+  onDestroy(() => childTitle.set(null))
 
   function handleRegen() {
     mnemonic.regenerate()

@@ -8,7 +8,7 @@ import bs58check from 'bs58check'
 // TODO encrypt this...
 // TODO once encrypted, might be better to just "drop" this session
 // storage stuff
-const mnemonicStoreKey = 'mnemonic'
+const mnemonicStoreKey = 'entropy'
   , mnemonicBits = 128
 
 function storeMnemonicInSession(mnemonicString) {
