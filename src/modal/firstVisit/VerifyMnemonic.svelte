@@ -3,7 +3,7 @@
   import { mnemonic } from '@store/mnemonic.js'
   import { validateMnemonic } from 'bip39'
   import { verifySuccess, mnemonicHtml, mnemonicTerm } from '@/constants.js'
-  import { childLockNext, childLockPrev, childTitle } from '@store/firstVisitNav.js'
+  import { childLockNext, childTitle, lockNav } from '@store/firstVisitNav.js'
 
   //TODO remove
   const DEBUG = true
@@ -27,17 +27,10 @@
   let ctr = 0
   let wordUser = ''
 
-  function lockNav(lock) {
-    childLockPrev.set(lock)
-    childLockNext.set(lock)
-    return $childLockPrev === $childLockNext && $childLockNext
-  }
-  
   function handleVerify() {
     if (!isWordUserValid) return
-    ctr++
-    if (verified) childLockNext.set(false)
-    else wordUser = ''
+    ctr += 1
+    wordUser = ''
     return true
   }
 
@@ -56,6 +49,7 @@
   // could lessen required verified words by passing something lower than menmonic length
   // TODO research if we should do whole phrase, based on user feedback and safety...
   $: verified = DEBUG ? ctr >= 1 : ctr >= mnemonicArray.length
+  $: verified && childLockNext.set(false)
   $: placeholder = verified ?
       verifySuccess :
       `Enter Word #${wordIdx + 1} then hit verify or enter!`

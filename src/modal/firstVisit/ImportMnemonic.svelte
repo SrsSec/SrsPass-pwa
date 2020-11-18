@@ -14,19 +14,17 @@
 
   let mnemonicUser = ''
   $: isMnemonicUserValid = validateMnemonic(mnemonicUser)
-  $: mnemonicUser.length > 0 ? childLockNext.set(true) : childLockNext.set(false)
+  $: imported = mnemonicUser === $mnemonic
+  $: mnemonicUser.length > 0 && !imported ? childLockNext.set(true) : childLockNext.set(false)
 </script>
 
 <p>
-  If you have your own {@html mnemonicHtml} already, you may import it here, or continue to the next step to generate one
+  If you have your own {@html mnemonicHtml} already, you may import it here, or continue to the next step to generate a new one.
 </p>
 <textarea on:focus={() => childFocus.set(true)} on:blur={() => childFocus.set(false)} class:red-border="{mnemonicUser.length > 0 && !isMnemonicUserValid}" placeholder="Enter your {mnemonicTerm} here..." bind:value={mnemonicUser}/>
 <button disabled={!isMnemonicUserValid} on:click={handleImport}>
   Import
 </button>
-<p>
-  {isMnemonicUserValid}
-</p>
 
 <style>
   .red-border {

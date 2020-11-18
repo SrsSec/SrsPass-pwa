@@ -16,11 +16,11 @@
 </script>
 
 <p>
-  Here is your 12-word {@html mnemonicHtml}... (your browser will remember it unless you delete its cache).
+  Here is your 12-word {@html mnemonicHtml}... it will be saved in this browser, but you'll need a copy for other devices or if your browser cache is deleted.
 </p>
 <textarea readonly>{$mnemonic}</textarea>
 <button on:click={handleRegen}>
-  Regenerate
+  Generate New Phrase
 </button>
 <p>
   The next dialog will verify that you have backed up your {@html mnemonicHtml} correctly!

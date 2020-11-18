@@ -1,49 +1,30 @@
 // TODO consider recovery/sync as terminology?
 // internally we'll refer to it as mnemonic
-export const mnemonicTerm = 'backup phrase'
-export const mnemonicHtml = `<strong>${mnemonicTerm}</strong>`
+// we capitalize terms, as it's easier to use lowercase() it than vice versa
+export const appTerm = 'SrsPass'
+
+export const mnemonicTerm = 'Backup Phrase'
+export const mnemonicHtml = `<strong>${mnemonicTerm.toLowerCase()}</strong>`
 export const verifySuccess = `Verification complete! Make sure to keep your ${mnemonicTerm} stored for future use.`
 
-export const someMsg = `Testing 1234`
+export const passTerm = 'Unlock Password'
+export const passHtml = `<strong>${passTerm.toLowerCase()}</strong>`
 
-export const popUpWelcome = {
-  title: 'Welcome!'
-  , message : `This seems to be your first visit.
-      Let's begin with a quick setup to get you going...
-      <br/>
-      <br/>
-      In the next step, we'll generate your <strong>seed phrase</strong>
-      <br/>
-      <br/>
-      You must make a backup of it on paper or your phone, it will consist of 12-words
-      that will be used to secure your password generation, which you'll need if you
-      need to perform an offline recovery of your passwords at some point.
-      <br/>
-      <br/>
-      <i>This phrase doubles as a crypto wallet mnemonic, as it's bip39. In fact, if you like
-      you may import your own phrase, which we'll prompt you for!</i>
-  `
-}
-export const popUpWelcome2 = {
-  title: 'Welcome!'
-  , message : `This seems to be your first visit.
-      Let's begin with a quick setup to get you going...
-      <br/>
-      <br/>
-      In the next step, we'll generate your <strong>seed phrase</strong>. 
-      <br/>
-      <br/>
-      This will basically serve as your account identifier, save it and keept it secure. In the next steps we will save it to your current browser's storage.
-      <br/>
-      <br/>
-      You must make a backup of it on paper or your phone, it will consist of 12-words
-      that will be used to secure your password generation, which you'll need if you
-      need to perform an offline recovery of your passwords at some point or wish to sync
-      your passwords on another device.
-      <br/>
-      <br/>
-      <i>This phrase doubles as a crypto wallet mnemonic, as it's bip39. In fact, if you like
-      you may import your own phrase, which we'll prompt you for!</i>
-      TODO add docu link giving more details.
-  `
-}
+export const childPassTerm = 'Srs Password'
+export const childPassHtml = `<strong>${childPassTerm.toLowerCase()}</strong>`
+export const childPassesTerm = `${childPassTerm}s`
+export const childPassesHtml = `<strong>${childPassTerm.toLowerCase()}</strong>`
+
+export const aesAlgo = 'aes-256-gcm'
+
+export const tipChildPass = 'This contains the child password to use as the password for the above login/uri combo. ' +
+  `It is generated using your credentials from the setup step and is reproducible on other devices with those same parameters.`
+// export const tipChildPass = 'This contains the child password you should enter as the password for the above login/uri combo. ' +
+//   `It is derived by mashing your memory-hard hashes of your ${mnemonicTerm} and ${passTerm} with the login/uri combo and options ` +
+//   `through another round of the argon2id KDF, to receive the desired set of cryptographically random bytes to derive a deterministic ` +
+//   `yet random password`
+export const tipLogin = 'Enter the login details here. Using either your "e-mail" or "username", or better yet, both in the form of "e-mail/username" is recommended'
+export const tipUri = 'Enter the URI (Uniform Resource Identifier) of the resource you are looking to create a password for. This will usually be a domain name, in the form of "domain.com"'
+export const tipIndex = `You would increment the index by 1, any time you may need to update the ${childPassTerm} for a site, either due to ` +
+  `a site requiring periodic password updates or it being compromised. By incrementing, a completely different password will be generated.`
+export const tipPassLen = `Request a specific character length for your ${childPassTerm}, to suit your needs or conform to peculiar website requirements`

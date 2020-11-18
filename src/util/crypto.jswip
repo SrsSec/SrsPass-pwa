@@ -1,0 +1,169 @@
+import cbor from 'cbor'
+import WorkerArgon2id from 'worker-loader!@worker/argon2id.js'
+
+import bs58check from 'bs58check'
+import {
+  createHmac,
+  createCipheriv,
+  createDecipheriv,
+  randomBytes
+} from 'crypto'
+// base58 will be used for any at rest blobs to help identify potential corruption and fail on it
+// derived key should be argon2id with `srsPass aes-gcm ${csprng 256 bits}` as the salt, 256 bits/32 bytes; we derive a new decryption key on each device for this purpose then
+//// derived key doesnt make sense..., there should be one encryption/gen key...
+// good real IV would be HMACx2 SHA-512 wit hash data being the plain mnemonic and the password, 256 bits derived key
+//// HMAC once could be sufficient, read into her. The 256-bit key should be impossibru to brute force, and we would only use the truncation of its first 96-bits, thereby not actually revealing a hash. The IV portion should be stored in a bloom filter or tree structure to identify possible repetition...
+// In particular, in 2006 Mihir Bellare proved that HMAC is a PRF under the sole assumption that the compression function is a PRF.[8] Therefore, HMAC-MD5 does not suffer from the same weaknesses that have been found in MD5.
+//
+// NEW
+//
+// base58 will be used for any at rest blobs to help identify potential corruption and fail on it
+// derived key should be argon2id with `srsPass aes-gcm ${csprng 256 bits}` as the salt, 256 bits/32 bytes; we derive a new decryption key on each device for this purpose then
+// IV will be CSPRNG, as good randomness and implementation is dependent on the browser... could improve by passing through hmac once
+//crypto.subtle.importKey('raw', new ArrayBuffer(32), { name: 'AES-GCM' }, false, ['encrypt']).then(key => {
+//console.log(Date.now())
+//
+//  console.log(key)
+//  const tenc = new TextEncoder
+//  // iv must be 96 bits
+//  crypto.subtle.encrypt({ name: 'AES-GCM', iv: new ArrayBuffer(12) }, key, tenc.encode('cipharr')).then(c => {
+//    console.log(c)
+//    console.log(cbor.encode(c))
+//    sessionStorage.setItem('t', cbor.encode(c).toString('latin1'))
+//    console.log(Buffer.from(sessionStorage.getItem('t'), 'latin1'))
+//    sessionStorage.setItem('b', bs58check.encode(cbor.encode(c)))
+//    console.log(determineIV('secret', 'data'))
+//    let enc = encryptForStorage(Buffer.alloc(32, 2), 'just some string data')
+//    console.log(enc)
+//    console.log(decryptFromStorage(Buffer.alloc(32, 2), enc))
+//    console.log(Date.now())
+//  })
+//})
+
+// returns buffer
+function hmacSHA512x2(key, data) {
+    const hmac = createHmac('sha512', key);
+    hmac.update(data)
+    hmac.update(data)
+    return hmac.digest()
+}
+
+// deterministically generate an IV, based off a key
+// and the underlying data
+// key should be minimum 256-bits for this use-case to be secure
+// returns buffer
+function determineIV(key, data) {
+  // truncate to first 12 bytes/96 bits to follow NIST recommendation
+  // for IV length
+  return hmacSHA512x2(key, data).slice(0, 12)
+}
+
+function encryptAES256GCM(key, iv, data) {
+  const cipher = createCipheriv(
+    'aes-256-gcm',
+    key,
+    determineIV(key, data)
+  )
+  cipher.update(data)
+  return cipher.final('hex')
+}
+
+
+function encryptForStorage(key, data) {
+  const iv = determineIV(key, data)
+  const cipherData = encryptAES256GCM(
+    key,
+    iv,
+    data
+  )
+  console.log(key)
+  console.log(data)
+  console.log(cipherData)
+  const encryptedObj = {
+    data: cipherData,
+    iv
+  }
+  console.log(encryptedObj)
+
+  return bs58check.encode(cbor.encode(encryptedObj))
+}
+
+const encodeForStorage = obj =>
+  bs58check.encode(cbor.encode(obj))
+
+//needs try
+function decryptFromStorage(key, encodedString) {
+  let decoded
+  try {
+    decoded = bs58check.decode(encodedString)
+  } catch (e) {
+  }
+  const decodedObj = cbor.decode(decoded)
+  console.log(decodedObj)
+}
+
+function argon2(pass, salt, opt = {}) {
+  return new Promise(resolve => {
+    const worker = new WorkerArgon2id()
+    const params = { salt, ...opt }
+    worker.postMessage({ pass, params })
+    worker.onmessage = ({ data }) => resolve(data)
+  })
+}
+
+const getArgon2Hash = async (pass, salt, opt) =>
+  (await argon2(pass, salt, opt)).res.hash
+
+const aesAlgo = 'aes-256-gcm'
+function encryptAes(key, payload) {
+  const iv = randomBytes(12)
+  const cipher = createCipheriv(aesAlgo, key, iv)
+  const encrypted = Buffer.concat([
+    cipher.update(payload),
+    cipher.final()
+  ])
+
+  const x = {
+    payload: encrypted,
+    authTag: cipher.getAuthTag(),
+    iv
+  }
+  console.log(decryptAes(key, x).toString('ascii'))
+  return x
+}
+
+function decryptAes(key, { iv, payload, authTag }) {
+  const decipher = createDecipheriv(aesAlgo, key, iv)
+  decipher.setAutoPadding(false)
+  decipher.setAuthTag(authTag)
+  const decrypted = Buffer.concat([
+    decipher.update(payload),
+    decipher.final()
+  ])
+  return decrypted
+}
+
+async function encryptMnemonicSeed(pass, payload) {
+  // generate 256-bits of entropy to use for salt
+  const salt = randomBytes(32)
+  // use password and salt to run through KDF
+  // to yield unique key for each device that should be impossible to bruteforce
+  // without the salt, and non-trivial even with salt, as long as password is secure
+  const key = await getArgon2Hash(pass, salt, { hashLen: 32, time: 1, mem: 4096 })
+  // assign encrypted object which contains encrypted payload
+  // and the parameters needed to recreate key and decipher the payload
+  const encrypted = {
+    keySalt: salt,
+    ...encryptAes(key, payload)
+  }
+  console.log(encrypted)
+  const encryptedEncodedBlob = encodeForStorage(encrypted)
+  return encryptedEncodedBlob
+}
+
+;(async () => {
+  let x = await encryptMnemonicSeed('test', 'ffff')
+  console.log(x)
+  console.log(bs58check.decode(x))
+  console.log(cbor.decode(bs58check.decode(x)))
+})()

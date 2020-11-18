@@ -8,9 +8,10 @@
   } from '@store/firstVisitNav.js'
 
   let idx = 0
-  function overlay_click(e) {
-    if ('close' in e.target.dataset)
-      show = false;
+  // close is only enabled on last page
+  function handleClose(e) {
+    if (lastPage && 'close' in e.target.dataset)
+      show = false
   }
 
   $: lockPrev = () => $childLockPrev || idx < 1
@@ -34,18 +35,23 @@
   , bodies = []
   , show = false
 
-  let visible = show
+  $: lastPage = idx === bodies.length - 1
 </script>
 
 <svelte:window on:keydown={handleKeydown}/>
 {#if show}
   <div>
-    <div class="modal-overlay" data-close on:click={overlay_click} transition:fade={{duration: 1500}}>
+    <div class="modal-overlay" data-close on:click={handleClose} transition:fade={{duration: 1500}}>
       <div class="modal-container center">
         <h2>{$childTitle || title}</h2>
         <main><svelte:component this={bodies[idx]} /></main>
-        <button disabled={lockPrev()} on:click={() => idx--}>Prev</button>
-        <button disabled={lockNext()} on:click={() => idx++}>Next</button>
+        {#if lastPage}
+          <div>
+            <button data-close on:click={handleClose}>Finish</button>
+          </div>
+        {/if}
+        <button disabled={lockPrev()} on:click={() => idx -= 1}>Prev</button>
+        <button disabled={lockNext()} on:click={() => idx += 1}>Next</button>
       </div>
     </div>
   </div>
