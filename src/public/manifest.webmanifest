@@ -1,0 +1,18 @@
+{
+  "name": "SrsPass - Password Generator & Manager Experimental Preview",
+  "short_name": "SrsPass",
+  "description": "A deterministic yet cryptographically secure stateless password generator",
+  "categories": ["password", "security", "generator", "manager", "secure"],
+  "lang": "en-US",
+  "start_url": "/index.html",
+  "display": "standalone",
+  "orientation": "any",
+  "theme_color": "#1761a0",
+  "background_color": "#eee",
+  "icons": [
+    {
+      "src": "/favicon.png",
+      "sizes": "200x200"
+    }
+  ]
+}
