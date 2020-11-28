@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang='en'>
+<head>
+	<meta charset='utf8'>
+	<meta name='viewport' content='width=device-width'>
+
+	<title>SrsPass - Alpha (Experimental)</title>
+
+  <link rel='manifest' href='/manifest.webmanifest'>
+
+  <meta name='mobile-web-app-capable' content='yes'>
+  <meta name='apple-mobile-web-app-capable' content='yes'>
+  <meta name='application-name' content='SrsPass'>
+  <meta name='apple-mobile-web-app-title' content='SrsPass'>
+  <meta name='theme-color' content='#1761a0'>
+  <meta name='msapplication-navbutton-color' content='#1761a0'>
+  <meta name='apple-mobile-web-app-status-bar-style' content='black-translucent'>
+  <meta name='msapplication-starturl' content='/index.html'>
+  <meta name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no'>
+
+  <link rel='icon' sizes='200x200' href='favicon.png'>
+  <link rel='apple-touch-icon' sizes='200x200' href='favicon.png'>
+  <script>
+    // Check that service workers are supported
+    if ('serviceWorker' in navigator) {
+      // Use the window load event to keep the page load performant
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/service-worker.js');
+      });
+    }
+  </script>
+</head>
+
+<body>
+</body>
+</html>
