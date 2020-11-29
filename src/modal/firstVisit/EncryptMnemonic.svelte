@@ -55,9 +55,6 @@ zxcvbn.js bundled and minified is about 400kB gzipped or 820kB uncompressed, mos
 {/if}
 
 <style>
-  .red-border {
-    border-color: red;
-  }
   textarea {
     width: 100%;
     height: auto;
