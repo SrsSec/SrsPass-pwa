@@ -4,7 +4,6 @@
   import Title from '@component/Title.svelte'
   import FirstVisitSetup from '@component/Setup.svelte'
   import PassGenerator from '@component/PassGenerator.svelte'
-  import Popup from '@modal/Popup.svelte'
   import * as constant from '@/constants.js'
 
   localStorage.removeItem('loglevel:webpack-dev-server')
