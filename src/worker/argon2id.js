@@ -20,7 +20,6 @@ async function argon2id({ pass, params }) {
       , type: argon2.ArgonType.Argon2id
       , hashLen: params.hashLen || 32
     })
-    console.log(res)
     return {
       res,
       params

@@ -20,7 +20,6 @@ import {
 // derived key should be argon2id with `srsPass aes-gcm ${csprng 256 bits}` as the salt, 256 bits/32 bytes; we derive a new decryption key on each device for this purpose then
 // IV will be CSPRNG, as good randomness and implementation is dependent on the browser... could improve by passing through hmac once
 //crypto.subtle.importKey('raw', new ArrayBuffer(32), { name: 'AES-GCM' }, false, ['encrypt']).then(key => {
-//console.log(Date.now())
 //
 // TODO DOCUMENT THIS HEAVILY
 
@@ -141,7 +140,6 @@ async function encryptSeedFromMnemonic(pass, mnemonic) {
 async function decryptMnemonicSeedBlob(pass, blob) {
   const encrypted = decodeFromStorage(blob)
   const { salt, params } = encrypted.key
-  console.log(params)
   const key = await deriveSeedEncryptionKey(pass, salt, params)
   const payload = decryptAes(key, encrypted)
   return payload
