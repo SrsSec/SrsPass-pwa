@@ -5,8 +5,7 @@
   import { verifySuccess, mnemonicHtml, mnemonicTerm } from '@/constants.js'
   import { childLockNext, childTitle, lockNav } from '@store/firstVisitNav.js'
 
-  //TODO remove
-  const DEBUG = true
+  const DEBUG = process.env.NODE_ENV === 'development'
 
   // lock navigation on mount, and return a bound function which unlocks
   // this returned function will be run onDestroy lifetime
@@ -47,7 +46,8 @@
   $: currentWord = mnemonicArray[wordIdx]
   $: isWordUserValid = wordUser.trim() === currentWord
   // could lessen required verified words by passing something lower than menmonic length
-  // TODO research if we should do whole phrase, based on user feedback and safety...
+  // ODOT research if we should do whole phrase, based on user feedback and safety...
+  // yes, it is needed, user miss the words at times...
   $: verified = DEBUG ? ctr >= 1 : ctr >= mnemonicArray.length
   $: verified && childLockNext.set(false)
   $: placeholder = verified ?
