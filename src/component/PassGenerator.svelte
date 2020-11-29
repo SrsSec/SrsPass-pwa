@@ -2,8 +2,8 @@
 import * as R from 'ramda'
 import {
   getArgon2Hash
-  , a2params 
-  , loadDecryptSeed 
+  , a2params
+  , loadDecryptSeed
   , deriveGeneratorPassword
 } from '@util/crypto'
 import * as c from '@/constants.js'
@@ -24,14 +24,52 @@ let unlocking = false
   , index = 0
   , passLen = 20
   , customAlpha = ''
+  , childPassFormatDefault = 'x'
+  , childPassFormat = childPassFormatDefault
 
-function enterHandler(event) {
+function handleUnlockEnter(event) {
   if (event.key === "Enter") {
     event.preventDefault()
-    handleGenerateClick()
+    handleUnlockClick()
   }
 }
 
+function handleCopyClick() {
+  navigator.clipboard.writeText(childPass)
+}
+
+function handlePassFormatInput(event) {
+  const { key } = event
+  if (Object.keys(charsetDict).indexOf(key) < 0)
+    return event.preventDefault()
+  else if (key === 'c' && customAlpha.length === 0) {
+    event.preventDefault()
+    return alert(`You must define a custom alphabet in the input underneath, before you can use 'c' in the format!`)
+  }
+}
+
+const dedupeChars = R.pipe(
+  R.split(''),
+  R.uniq,
+  R.join('')
+)
+const charsetDict = {
+  '0': '123456789',
+  'A': 'ABCDEFGHJKLMNPQRSTUVWXYZ',
+  'a': 'abcdefghijkmnopqrstuvwxyz',
+  '@': `!@#$%^&*?`,
+  '#': `!@#$%^&*?()-=_+[]{};':",.`,
+}
+charsetDict.d = charsetDict['0'] + charsetDict['A'] + charsetDict['a']
+charsetDict.x = charsetDict['d'] + charsetDict['#']
+charsetDict.c = customAlpha
+// run through the dict and dedupe... should probably give warning
+// if there are dupes
+Object.entries(charsetDict).forEach(([k, v]) => {
+  charsetDict[k] = dedupeChars(v)
+  if (v !== charsetDict[k]) throw new Error(`charset ${k} has dupe chars... please resolve`)
+})
+const charsetDefinitions = Object.entries(charsetDict).map(([k,v]) => `${k}: ${v}`).join('\n') + '(custom alphabet)\n\ne.g. aA0a for a 6 length password may create a password that looks like: yM5etu'
 const alpha = '123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz'
 // A = upperlpha, a = lower, @ = symbol, 0 = num, * = any
 // x = any alpha
@@ -50,10 +88,21 @@ const toPassString = (arr, al=alpha) =>
 const toPassStringFromBigN = (arr, al=alpha) =>
   Array.from(arr, x => al[x % BigInt(al.length)]).join('')
 
-const unlockPassFromBuffer64 = ({ buffer }) => R.pipe(
-  toUint64Array,
-  toPassStringFromBigN
-)(buffer)
+const transformUArrWithFormatToPass = (arr, alArr) =>
+  Array.from(Array(arr.length)).map((_,i) => {
+    let x = arr[i]
+    let idx = Math.min(i, alArr.length - 1)
+    let al = alArr[idx]
+    return al[x % BigInt(al.length)]
+  }).join('')
+
+// const childPassFromBuffer64old = ({ buffer }) => R.pipe(
+//   toUint64Array,
+//   toPassStringFromBigN
+// )(buffer)
+
+const childPassFromBuffer64 = ({ buffer }, alphaArray) =>
+  transformUArrWithFormatToPass(toUint64Array(buffer), alphaArray)
 
 async function handleUnlockClick() {
   unlocking = true
@@ -81,7 +130,32 @@ async function handleUnlockClick() {
 const concatBufWithStr = (b, s) =>
   Buffer.concat([b, Buffer.from(s, 'utf8')])
 
+// check that each char passed yields a key in the charsetDict
+const validatePassFormat = R.pipe(
+  R.split(''),
+  R.all(
+    R.includes(
+      R.__,
+      R.keys(charsetDict)
+    )
+  )
+)
+
+// TODO consider optimizing this to cut off the duplicates at end
+const deriveAlphaArray = R.pipe(
+  R.split(''),
+  R.map(
+    R.prop(
+      R.__,
+      charsetDict
+    )
+  )
+)
+
 async function handleGenerateClick() {
+  const cpf = childPassFormat
+  if (!validatePassFormat(cpf))
+    return alert(`Invalid pass format... please check tooltips for valid characters by hovering over the ${childPassTerm} format input`)
   childPass = ""
   generating = true
   // uint8 array
@@ -89,9 +163,9 @@ async function handleGenerateClick() {
   // index is omitted unless non-zero, to keep the salt from being too easily
   // identifiable by such a consistent marker
   let fmt = (index > 0 ? index : '') + uri + login
-  console.log(fmt)
-  console.log(Buffer.from(fmt))
-  console.log(concatBufWithStr(salt, fmt))
+  //console.log(fmt)
+  //console.log(Buffer.from(fmt))
+  //console.log(concatBufWithStr(salt, fmt))
   const derived = await getArgon2Hash(
     pass,
     concatBufWithStr(salt, fmt), //TODO use buffers?
@@ -102,7 +176,7 @@ async function handleGenerateClick() {
     }
   )
   generating = false
-  childPass = unlockPassFromBuffer64(derived)
+  childPass = childPassFromBuffer64(derived, deriveAlphaArray(cpf))
 }
 
 //const isNumPress = event =>
@@ -114,25 +188,25 @@ async function handleGenerateClick() {
 // when bound to onkeydown events
 const blacklistDecimal = event =>
   event.keyCode === 190 && event.preventDefault()
-/*
-  <label for="passInput">Master Pass:</label>
-  <input name="passInput" disabled={generating} placeholder={generating && msg.loading || msg.passInput} bind:value={pass} on:keypress={enterHandler} type="text">
- */
+
 const isEmpty = x => !x || x.length === 0
 $: needsCredentials = isEmpty(pass) || isEmpty(salt)
 $: index = Math.floor(index)
 $: passLen = Math.floor(passLen)
+$: customAlpha = dedupeChars(customAlpha)
+$: charsetDict.c = customAlpha
+$: if(customAlpha.length === 1 &&
+  childPassFormat === childPassFormatDefault) childPassFormat = 'c'
 </script>
 
 <div>
   {#if needsCredentials}
-    <h3 title="It's literally http for frig sakes">a.k.a. consider anything you put in this website to be keylogged/compromisable atm</h3>
     {#if unlocking}
       <p>Unlocking... please wait</p>
     {:else}
       <div>
         <label for="unlockPassInput" title={c.tipUnlockPass}>Please enter your {@html c.passHtml}!</label>
-        <input title={c.tipUnlockPass} name="unlockPassInput" type="text" bind:value={unlockPass} disabled={unlocking}>
+        <input title={c.tipUnlockPass} name="unlockPassInput" type="text" bind:value={unlockPass} disabled={unlocking} on:keypress={handleUnlockEnter}>
         <button title={c.tipUnlockPass} on:click={handleUnlockClick} disabled={unlocking}>
           Unlock
         </button>
@@ -149,9 +223,10 @@ $: passLen = Math.floor(passLen)
     </div>
     <br/>
     <div class="checkbox">
-      <label><span>advanced<input name="advOptsInput" type="checkbox" bind:checked={advOpts}></span></label>
+      <label for=advOptsInput><span>advanced options<input name="advOptsInput" type="checkbox" bind:checked={advOpts}></span></label>
     </div>
     {#if advOpts}
+      <br/>
       <div class="input-container" title={c.tipIndex}>
         <label for="indexInput">index</label>
         <input name="indexInput" type="number" min="0" steps="1" bind:value={index} on:keydown={blacklistDecimal} />
@@ -161,19 +236,28 @@ $: passLen = Math.floor(passLen)
         <input name="passLenInput" type="number" min="4" steps="1" bind:value={passLen} on:keydown={blacklistDecimal} />
       </div>
       <br/>
-      <!-- TODO custom alpha
-      <label for="customAlphaInput">custom alphabet</label>
-      <input name="customAlphaInput" type="text" bind:value={customAlpha}>
-      -->
+      <div class="input-container" spellcheck="false" title={c.tipPassFormat+`${charsetDefinitions}`}>
+        <label for="childPassFormat">{c.childPassTerm.toLowerCase()} format</label>
+        <input name="childPassFormat" type="text" bind:value={childPassFormat} on:keypress={handlePassFormatInput}>
+      </div>
+      <div class="input-container" spellcheck="false" title={c.tipCustomAlpha}>
+        <label for="customAlphaInput">c: (custom alphabet)</label>
+        <input name="customAlphaInput" type="text" bind:value={customAlpha} placeholder="e.g. abcd_!">
+      </div>
+      <br/>
     {/if}
+    <br/>
     <br/>
     <div>
       <button on:click={handleGenerateClick}>
         generate {@html c.childPassHtml}
       </button>
       <div class="input-container" title={c.tipChildPass}>
-        <textarea style="width:100%" placeholder="Copy me after generating!" bind:value={childPass} disabled/>
+        <textarea style="width:100%" placeholder="Copy me after generating!" bind:value={childPass} disabled />
       </div>
+      <button disabled={childPass.length === 0} on:click={handleCopyClick}>
+        copy
+      </button>
     </div>
   {/if}
 </div>
