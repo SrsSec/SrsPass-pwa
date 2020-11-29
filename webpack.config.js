@@ -17,7 +17,7 @@ const WorkboxServiceWorker = new WorkboxPlugin.GenerateSW({
     {
       url: '/argon2id.worker.js',
       // TODO update this with a real subhash or rev number, should stay pretty static though
-      revision: '1337',
+      revision: '13337',
     },
   ],
   runtimeCaching: [
