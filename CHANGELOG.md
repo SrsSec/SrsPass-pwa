@@ -1,5 +1,12 @@
 # CHANGELOG
 
+### [0.1.1](https://github.com/SrsSec/SrsPass-pwa/compare/v0.1.0...v0.1.1) (2020-12-03)
+
+
+### Bug Fixes
+
+* BigInt compatibility for old browsers ([711705a](https://github.com/SrsSec/SrsPass-pwa/commit/711705a0e539ce24da5e42bd026e3fd79c9ea750))
+
 ## 0.1.0 (2020-11-30)
 
 

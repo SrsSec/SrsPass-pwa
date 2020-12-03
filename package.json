@@ -1,6 +1,6 @@
 {
   "name": "srspass",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "devDependencies": {
     "argon2-browser": "^1.15.2",
     "base64-loader": "^1.0.0",
