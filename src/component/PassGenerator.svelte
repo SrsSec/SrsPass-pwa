@@ -7,6 +7,7 @@ import {
   , deriveGeneratorPassword
 } from '@util/crypto'
 import * as c from '@/constants.js'
+import JSBI from 'jsbi'
 
 const msg = {
   passInput: "Enter password here..."
@@ -76,18 +77,44 @@ const alpha = '123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz'
 // c = custom alphabet
 // add custom symbol alphabet
 
+// FIXME: these typed arrays will have a differing byte order depending on system endianness
+// aka dont use in production
 const toUint64Array = buffer =>
   new BigUint64Array(buffer)
 
 const toUint32Array = buffer =>
   new Uint32Array(buffer)
 
-const toPassString = (arr, al=alpha) =>
-  Array.from(arr, x => al[x % al.length]).join('')
+/*
+ * DataView.prototype.getBigUint64 polyfill
+ */
+const getUint64JSBI = (view, byteOffset, littleEndian) => {
+  const { BigInt } = JSBI,
+    LE = !!littleEndian,
+    BO = byteOffset|0
+  const lo = BigInt(view.getUint32(LE ? BO + 0 : BO + 4, LE))
+  const hi = BigInt(view.getUint32(LE ? BO + 4 : BO + 0, LE))
+  // let's convert both lo/hi to u64, combine them by applying a 32 bit lshift on hi
+  // could prolly do bitwise OR, test
+  return JSBI.asUintN(64, JSBI.bitwiseOr(lo, JSBI.leftShift(hi, BigInt(32))))
+}
 
-const toPassStringFromBigN = (arr, al=alpha) =>
-  Array.from(arr, x => al[x % BigInt(al.length)]).join('')
+// TODO do some obund checks or workarounds, or ensure that buff will fit nicely, or supplement with 0s at end?
+const toUint64ArrayLE = buffer => {
+  const view = new DataView(buffer)
+  return Array.from(Array(view.byteLength / 8 | 0)).map((_, i) =>
+    getUint64JSBI(view, i * 8, true))
+}
 
+// kept for reference just
+//const toPassString = (arr, al=alpha) =>
+//  Array.from(arr, x => al[x % al.length]).join('')
+//
+//const toPassStringFromBigN = (arr, al=alpha) =>
+//  Array.from(arr, x => al[x % BigInt(al.length)]).join('')
+
+// old method, must be consistent with below method!!!
+// TODO test their consistency
 const transformUArrWithFormatToPass = (arr, alArr) =>
   Array.from(Array(arr.length)).map((_,i) => {
     let x = arr[i]
@@ -96,13 +123,23 @@ const transformUArrWithFormatToPass = (arr, alArr) =>
     return al[x % BigInt(al.length)]
   }).join('')
 
+const transformUArrWithFormatToPassJSBI = (arr, alArr) =>
+  Array.from(Array(arr.length)).map((_,i) => {
+    let x = arr[i] //BigInt
+    let idx = Math.min(i, alArr.length - 1)
+    let al = alArr[idx]
+    return al[JSBI.remainder(x, JSBI.BigInt(al.length))]
+  }).join('')
+
 // const childPassFromBuffer64old = ({ buffer }) => R.pipe(
 //   toUint64Array,
 //   toPassStringFromBigN
 // )(buffer)
 
 const childPassFromBuffer64 = ({ buffer }, alphaArray) =>
-  transformUArrWithFormatToPass(toUint64Array(buffer), alphaArray)
+  transformUArrWithFormatToPassJSBI(toUint64ArrayLE(buffer), alphaArray)
+  //transformUArrWithFormatToPass(toUint64Array(buffer), alphaArray)
+
 
 async function handleUnlockClick() {
   unlocking = true
