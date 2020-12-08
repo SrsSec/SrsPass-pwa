@@ -4,11 +4,15 @@ import { onMount, onDestroy } from 'svelte'
 import { appTerm, passTerm } from '@/constants.js'
 import { childTitle, lockNav } from '@store/firstVisitNav'
 
+const DEBUG = process.env.NODE_ENV === 'development'
+
 onMount(() => { 
   childTitle.set(`Welcome to ${appTerm}!`)
   // locks nav so users dont just skip without reading
-  lockNav(true)
-  setTimeout(() => lockNav(false), 8000)
+  if(!DEBUG) {
+    lockNav(true)
+    setTimeout(() => lockNav(false), 8000)
+  }
 })
 onDestroy(() => childTitle.set(null))
 

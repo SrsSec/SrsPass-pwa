@@ -38,7 +38,7 @@
   $: lastPage = idx === bodies.length - 1
 </script>
 
-<svelte:window on:keydown={handleKeydown}/>
+<svelte:window autofocus on:keydown={handleKeydown}/>
 {#if show}
   <div>
     <div class="modal-overlay" data-close on:click={handleClose} transition:fade={{duration: 1500}}>

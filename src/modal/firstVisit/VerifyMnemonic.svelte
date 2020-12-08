@@ -4,6 +4,7 @@
   import { validateMnemonic } from 'bip39'
   import { verifySuccess, mnemonicHtml, mnemonicTerm } from '@/constants.js'
   import { childLockNext, childTitle, lockNav } from '@store/firstVisitNav.js'
+  import { disableAnnoyingMobileInputBugs } from '@util/helper.js'
 
   const DEBUG = process.env.NODE_ENV === 'development'
 
@@ -13,6 +14,7 @@
   onMount(() => {
     lockNav(true)
     childTitle.set(`Verify your ${mnemonicTerm}`)
+    disableAnnoyingMobileInputBugs('TEXTAREA')
   })
 
   onDestroy(() => {
@@ -38,13 +40,17 @@
     // supports continuing with space also
     if (key === 'Enter' || [13, 32].indexOf(keyCode) >= 0) {
       evt.preventDefault()
-      handleVerify()
+      const verifyButtonDOM = document.getElementById('verifyWord')
+      verifyButtonDOM.focus()
+      verifyButtonDOM.click()
+      //handleVerify()
     }
   }
 
   $: wordIdx = mixedArray[ctr]
   $: currentWord = mnemonicArray[wordIdx]
-  $: isWordUserValid = wordUser.trim() === currentWord
+  $: wordUser = wordUser.trim()
+  $: isWordUserValid = wordUser === currentWord
   // could lessen required verified words by passing something lower than menmonic length
   // ODOT research if we should do whole phrase, based on user feedback and safety...
   // yes, it is needed, user miss the words at times...
@@ -57,17 +63,20 @@
 </script>
 
 <p>
-  Please verify your {@html mnemonicHtml} phrase here. Enter the word requested in the box!
+  Please verify your {@html mnemonicHtml} phrase here. Enter the word requested in the textbox (shows it when empty)!
 </p>
 <!-- svelte-ignore a11y-autofocus -->
-<textarea autofocus on:blur={() => handleVerify()} on:keydown={handleKeydown} disabled={verified} class:red-border="{wordUser.length > 0 && !isWordUserValid && !verified}" {placeholder} bind:value={wordUser}/>
-<button disabled={!isWordUserValid} on:click={handleVerify}>
+<textarea
+  autofocus
+  on:blur={() => handleVerify()} on:keydown={handleKeydown} disabled={verified} class:red-border="{wordUser.length > 0 && !isWordUserValid && !verified}" {placeholder} bind:value={wordUser}/>
+<button id="verifyWord" disabled={wordUser.length === 0} on:click={handleVerify}>
   Verify
 </button>
 
 <style>
   .red-border {
-    border-color: red;
+    border: 2px solid red !important;
+    border-radius: 4px;
   }
   textarea {
     width: 100%;

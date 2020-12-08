@@ -1,4 +1,8 @@
 <script>
+  import {
+    afterUpdate
+    , onMount
+  } from 'svelte'
 import * as R from 'ramda'
 import {
   getArgon2Hash
@@ -8,6 +12,7 @@ import {
 } from '@util/crypto'
 import * as c from '@/constants.js'
 import JSBI from 'jsbi'
+import { disableAnnoyingMobileInputBugs } from '@util/helper.js'
 
 const msg = {
   passInput: "Enter password here..."
@@ -27,6 +32,10 @@ let unlocking = false
   , customAlpha = ''
   , childPassFormatDefault = 'x'
   , childPassFormat = childPassFormatDefault
+  , unlockPassInputDOM
+  , showPass = false
+
+onMount(() => unlockPassInputDOM = document.getElementById('unlockPassInput'))
 
 function handleUnlockEnter(event) {
   if (event.key === "Enter") {
@@ -227,6 +236,11 @@ const blacklistDecimal = event =>
   event.keyCode === 190 && event.preventDefault()
 
 const isEmpty = x => !x || x.length === 0
+
+afterUpdate(() => {
+  disableAnnoyingMobileInputBugs()
+})
+
 $: needsCredentials = isEmpty(pass) || isEmpty(salt)
 $: index = Math.floor(index)
 $: passLen = Math.floor(passLen)
@@ -234,6 +248,8 @@ $: customAlpha = dedupeChars(customAlpha)
 $: charsetDict.c = customAlpha
 $: if(customAlpha.length === 1 &&
   childPassFormat === childPassFormatDefault) childPassFormat = 'c'
+$: unlockPassInputDOM && (
+  showPass ? unlockPassInputDOM.setAttribute('type', 'text') : unlockPassInputDOM.setAttribute('type', 'password'))
 </script>
 
 <div>
@@ -242,11 +258,14 @@ $: if(customAlpha.length === 1 &&
       <p>Unlocking... please wait</p>
     {:else}
       <div>
-        <label for="unlockPassInput" title={c.tipUnlockPass}>Please enter your {@html c.passHtml}!</label>
-        <input title={c.tipUnlockPass} name="unlockPassInput" type="text" bind:value={unlockPass} disabled={unlocking} on:keypress={handleUnlockEnter}>
+        <label for="unlockPassInput" title={c.tipUnlockPass}>Please enter your {@html c.passHtml} to begin!</label>
+        <input autofocus id="unlockPassInput" title={c.tipUnlockPass} name="unlockPassInput" type="text" bind:value={unlockPass} disabled={unlocking} on:keypress={handleUnlockEnter}>
         <button title={c.tipUnlockPass} on:click={handleUnlockClick} disabled={unlocking}>
           Unlock
         </button>
+        <div class="checkbox">
+          <label for=showUnlockPass><span>show password<input name="showUnlockPass" type="checkbox" bind:checked={showPass}></span></label>
+        </div>
       </div>
     {/if}
   {:else}

@@ -4,8 +4,12 @@
   import { validateMnemonic } from 'bip39'
   import { mnemonicTerm, mnemonicHtml } from '@/constants.js'
   import { childFocus, childTitle, childLockNext } from '@store/firstVisitNav'
+  import { disableAnnoyingMobileInputBugs } from '@util/helper.js'
 
-  onMount(() => childTitle.set('Existing User?'))
+  onMount(() => {
+    childTitle.set('Existing User?')
+    disableAnnoyingMobileInputBugs()
+  })
   onDestroy(() => childTitle.set(null))
 
   function handleImport() {
@@ -28,7 +32,8 @@
 
 <style>
   .red-border {
-    border-color: red;
+    border: 2px solid red;
+    border-radius: 4px;
   }
   textarea {
     width: 100%;

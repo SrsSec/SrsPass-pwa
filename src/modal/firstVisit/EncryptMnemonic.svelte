@@ -8,10 +8,14 @@ zxcvbn.js bundled and minified is about 400kB gzipped or 820kB uncompressed, mos
   import { saveEncryptSeedFromMnemonic } from '@util/crypto.js'
   import { mnemonicTerm, passTerm, passHtml } from '@/constants.js'
   import { childLockNext, childTitle, lockNav } from '@store/firstVisitNav.js'
+  import { disableAnnoyingMobileInputBugs } from '@util/helper.js'
 
   onMount(() => {
     lockNav(true)
     childTitle.set(`Enter your ${passTerm}`)
+    // NOTE: be sure to update this if unlock pass element tag is changed
+    disableAnnoyingMobileInputBugs()
+    passInputDOM = document.getElementById('encryptInputPass')
   })
 
   onDestroy(() => {
@@ -34,17 +38,41 @@ zxcvbn.js bundled and minified is about 400kB gzipped or 820kB uncompressed, mos
     encrypting = false
   }
 
+  function handleKeydown(evt) {
+    const { key, keyCode } = evt
+    if (key === 'Enter' || keyCode === 13) {
+      evt.preventDefault()
+      handleConfirm()
+    }
+  }
+
   let passUser = '',
-  encrypting = false,
-  encrypted = false
+    encrypting = false,
+    encrypted = false,
+    showPass = false,
+    passInputDOM
+
   $: encrypted ? childLockNext.set(false) : childLockNext.set(true)
+  $: passInputDOM && (
+    showPass ? passInputDOM.setAttribute('type', 'text') : passInputDOM.setAttribute('type', 'password'))
 </script>
 
-<p>Please enter a {@html passHtml}.</p>
-<p>This is your own password and not the {mnemonicTerm.toLowerCase()}.</p>
+<p>Please create a {@html passHtml}.</p>
+<p>This is your own password you must come up with and not the {mnemonicTerm.toLowerCase()}.</p>
 <p>You will need it to unlock the interface whenever you use this app, so this should be memorizable, and is the only password you have to remember.</p>
 <!--><textarea class:red-border="{mnemonicUser.length > 0 && !isMnemonicUserValid}" placeholder="Enter your {passTerm} here..." bind:value={mnemonicUser}/><-->
-<textarea disabled={encrypting || encrypted} placeholder="Enter your {passTerm} here..." bind:value={passUser}/>
+<br/>
+<input id="encryptInputPass"
+       disabled={encrypting || encrypted}
+       type="text"
+       required
+       placeholder="Enter {passTerm} here..."
+       on:keydown={handleKeydown}
+       bind:value={passUser}/>
+<div class="checkbox">
+  <label for=showPass><span>show plaintext pass<input name="showPass" type="checkbox" bind:checked={showPass}></span></label>
+</div>
+<br/>
 <button disabled={encrypting || encrypted} on:click={handleConfirm}>
   Confirm
 </button>
@@ -55,14 +83,18 @@ zxcvbn.js bundled and minified is about 400kB gzipped or 820kB uncompressed, mos
 {/if}
 
 <style>
-  textarea {
+  input {
     width: 100%;
     height: auto;
   }
-  @media (max-width: 440px) {
-    textarea { min-height: 6rem }
+  div.input-container {
+    max-width: 333px;
   }
-  @media (min-width: 441px) and (max-width: 580px) {
-    textarea { min-height: 5rem }
+  .checkbox label {
+    display: inline-block;
+  }
+  .checkbox input {
+    width: auto;
+    margin-left: 0.6rem;
   }
 </style>
