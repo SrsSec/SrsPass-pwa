@@ -1,3 +1,4 @@
+const { includes } = require('ramda')
 const path = require('path');
 const { IgnorePlugin } = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -90,8 +91,19 @@ module.exports = {
 					loader: 'svelte-loader',
 					options: {
 						emitCss: true,
-						hotReload: true
-					}
+						hotReload: true,
+            onwarn: (warning, handleWarning) => {
+              const ignored = [
+                'autofocus'
+              ]
+
+              const warnMsg = warning.code.replace('a11y-', '')
+              if (includes(warnMsg, ignored))
+                return
+
+              handleWarning(warning)
+            }
+          }
 				}
 			},
 			{
