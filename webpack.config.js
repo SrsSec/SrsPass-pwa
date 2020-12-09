@@ -59,39 +59,39 @@ module.exports = {
   node: {
     fs: 'empty'
   },
-	entry: {
-		bundle: ['./src/main.js']
-	},
-	resolve: {
-		alias: {
-			svelte: path.resolve('node_modules', 'svelte'),
-			'@': path.resolve(__dirname, 'src'),
-			'@root': path.resolve(__dirname, ''),
-			'@public': path.resolve(__dirname, 'src/public'),
-			'@component': path.resolve(__dirname, 'src/component'),
-			'@modal': path.resolve(__dirname, 'src/modal'),
-			'@worker': path.resolve(__dirname, 'src/worker'),
-			'@util': path.resolve(__dirname, 'src/util'),
-			'@store': path.resolve(__dirname, 'src/store')
-		},
-		extensions: ['.mjs', '.js', '.svelte'],
-		mainFields: ['svelte', 'browser', 'module', 'main']
-	},
-	output: {
-		path: __dirname + '/dist',
-		filename: '[name].js',
-		chunkFilename: '[name].[id].js'
-	},
-	module: {
+  entry: {
+    bundle: ['./src/main.js']
+  },
+  resolve: {
+    alias: {
+      svelte: path.resolve('node_modules', 'svelte'),
+      '@': path.resolve(__dirname, 'src'),
+      '@root': path.resolve(__dirname, ''),
+      '@public': path.resolve(__dirname, 'src/public'),
+      '@component': path.resolve(__dirname, 'src/component'),
+      '@modal': path.resolve(__dirname, 'src/modal'),
+      '@worker': path.resolve(__dirname, 'src/worker'),
+      '@util': path.resolve(__dirname, 'src/util'),
+      '@store': path.resolve(__dirname, 'src/store')
+    },
+    extensions: ['.mjs', '.js', '.svelte'],
+    mainFields: ['svelte', 'browser', 'module', 'main']
+  },
+  output: {
+    path: __dirname + '/dist',
+    filename: '[name].js',
+    chunkFilename: '[name].[id].js'
+  },
+  module: {
     noParse: /\.wasm$/,
-		rules: [
-			{
-				test: /\.svelte$/,
-				use: {
-					loader: 'svelte-loader',
-					options: {
-						emitCss: true,
-						hotReload: true,
+    rules: [
+      {
+        test: /\.svelte$/,
+        use: {
+          loader: 'svelte-loader',
+          options: {
+            emitCss: true,
+            hotReload: true,
             onwarn: (warning, handleWarning) => {
               const ignored = [
                 'autofocus'
@@ -104,17 +104,17 @@ module.exports = {
               handleWarning(warning)
             }
           }
-				}
-			},
-			{
-				test: /\.css$/,
-				use: [
-					/**
-					 * MiniCssExtractPlugin doesn't support HMR.
-					 * For developing, use 'style-loader' instead.
-					 * */
-					prod ? MiniCssExtractPlugin.loader : 'style-loader',
-					'css-loader'
+        }
+      },
+      {
+        test: /\.css$/,
+        use: [
+          /**
+           * MiniCssExtractPlugin doesn't support HMR.
+           * For developing, use 'style-loader' instead.
+           * */
+          prod ? MiniCssExtractPlugin.loader : 'style-loader',
+          'css-loader'
         ]
       },
       {
@@ -141,12 +141,12 @@ module.exports = {
         ]
       }
     ]
-	},
-	mode,
-	plugins: [
-		new MiniCssExtractPlugin({
-			filename: '[name].css'
-		}),
+  },
+  mode,
+  plugins: [
+    new MiniCssExtractPlugin({
+      filename: '[name].css'
+    }),
     new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
       template: 'src/public/index.html',
@@ -158,6 +158,6 @@ module.exports = {
     }),
     new IgnorePlugin(/^\.\/wordlists\/(?!english)/, /bip39\/src$/),
     ...(prod ? [WorkboxServiceWorker] : []),
-	],
-	devtool: prod ? false : 'source-map'
+  ],
+  devtool: prod ? false : 'source-map'
 };
