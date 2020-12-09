@@ -87,9 +87,6 @@ zxcvbn.js bundled and minified is about 400kB gzipped or 820kB uncompressed, mos
     width: 100%;
     height: auto;
   }
-  div.input-container {
-    max-width: 333px;
-  }
   .checkbox label {
     display: inline-block;
   }
