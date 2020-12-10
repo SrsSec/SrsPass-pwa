@@ -11,7 +11,7 @@ onMount(() => {
   // locks nav so users dont just skip without reading
   if(!DEBUG) {
     lockNav(true)
-    setTimeout(() => lockNav(false), 8000)
+    setTimeout(() => lockNav(false), 4000)
   }
 })
 onDestroy(() => childTitle.set(null))
@@ -24,4 +24,4 @@ derived from a single password of your own.</p>
 <p>No more having to memorize multiple passwords.</p>
 <p>Being stateless, you no longer need to worry about managing files or vaults across devices.
 Same input equals same output on any other device.</p>
-<p>You can find out more on our documentation page, let's continue with the setup.</p>
+<p>Would you like to know more? Let's continue with setup.</p>
