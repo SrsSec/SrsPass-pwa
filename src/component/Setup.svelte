@@ -9,7 +9,7 @@
   import EncryptMnemonic from '@modal/firstVisit/EncryptMnemonic.svelte'
   import FinishMsg from '@modal/firstVisit/FinishMsg.svelte'
 
-  import { storageKeys } from '@util/crypto'
+  import { needsSetup } from '@util/helper.js'
 
   // setup steps for first visits/new devices
   const setupSteps = [
@@ -22,10 +22,7 @@
     FinishMsg,
   ]
 
-  const { mnemonicSeed } = storageKeys
-  // TODO should check if it is a proper formatted encrypted blob
-  const x = localStorage.getItem(mnemonicSeed)
-  const show = !x
+  const show = needsSetup()
 </script>
 
 <NavModal title='test' bodies={setupSteps} {show}/>

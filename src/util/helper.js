@@ -1,3 +1,10 @@
+import { storageKeys } from '@util/crypto'
+
+export const needsSetup = () => {
+  // TODO should check if it is a proper formatted encrypted blob
+  return !localStorage.getItem(storageKeys.mnemonicSeed)
+}
+
 // they call em features, but seem more like bugs
 // would be nice to be able to limit to subset of DOM
 export const disableAnnoyingMobileInputBugs = (tags = ['TEXTAREA', 'INPUT']) => {

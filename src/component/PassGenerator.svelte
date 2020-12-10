@@ -12,7 +12,10 @@ import {
 } from '@util/crypto'
 import * as c from '@/constants.js'
 import JSBI from 'jsbi'
-import { disableAnnoyingMobileInputBugs } from '@util/helper.js'
+import {
+  needsSetup
+  , disableAnnoyingMobileInputBugs
+} from '@util/helper.js'
 
 const msg = {
   passInput: "Enter password here..."
@@ -260,7 +263,7 @@ $: unlockPassInputDOM && (
     {:else}
       <div>
         <label for="unlockPassInput" title={c.tipUnlockPass}>Please enter your {@html c.passHtml} to begin!</label>
-        <input autofocus id="unlockPassInput" title={c.tipUnlockPass} name="unlockPassInput" type="text" bind:value={unlockPass} disabled={unlocking} on:keypress={handleUnlockEnter}>
+        <input autofocus={!needsSetup()} id="unlockPassInput" title={c.tipUnlockPass} name="unlockPassInput" type="text" bind:value={unlockPass} disabled={unlocking} on:keypress={handleUnlockEnter}>
         <button title={c.tipUnlockPass} on:click={handleUnlockClick} disabled={unlocking}>
           Unlock
         </button>
