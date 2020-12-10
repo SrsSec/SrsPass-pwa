@@ -28,6 +28,7 @@
   "scripts": {
     "build": "cross-env NODE_ENV=production webpack",
     "dev": "webpack-dev-server --client-log-level debug --content-base public --port 5000 --host 0.0.0.0",
+    "nsinstall": "npm install --ignore-scripts",
     "release": ".github/release.sh"
   },
   "dependencies": {}
