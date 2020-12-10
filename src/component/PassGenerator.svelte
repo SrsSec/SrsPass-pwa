@@ -254,6 +254,7 @@ $: unlockPassInputDOM && (
 
 <div>
   {#if needsCredentials}
+    <h3>Usable offline & as PWA for extra security</h3>
     {#if unlocking}
       <p>Unlocking... please wait</p>
     {:else}
@@ -319,6 +320,7 @@ $: unlockPassInputDOM && (
 </div>
 
 <style>
+  /* used for tooltips to encompass the whole view of the input */
   div.input-container {
     max-width: 333px;
   }

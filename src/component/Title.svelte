@@ -4,4 +4,4 @@ h1 {
   padding-top: 0.67em;
 }
 </style>
-<h1>SrsPass - Experimental Alpha Preview</h1>
+<h1>SrsPass</h1>
