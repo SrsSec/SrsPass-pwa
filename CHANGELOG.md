@@ -1,5 +1,17 @@
 # CHANGELOG
 
+### [0.1.2](https://github.com/SrsSec/SrsPass-pwa/compare/v0.1.1...v0.1.2) (2020-12-10)
+
+
+### Features
+
+* **ux:** improvements ([ab4c4c6](https://github.com/SrsSec/SrsPass-pwa/commit/ab4c4c686a651a8579656252781c7d59f42e9ac1))
+
+
+### Bug Fixes
+
+* autofocus on unlock & add needsSetup helper ([9d03894](https://github.com/SrsSec/SrsPass-pwa/commit/9d03894f221deee69cc50ab3c893dc0d92177215))
+
 ### [0.1.1](https://github.com/SrsSec/SrsPass-pwa/compare/v0.1.0...v0.1.1) (2020-12-03)
 
 
