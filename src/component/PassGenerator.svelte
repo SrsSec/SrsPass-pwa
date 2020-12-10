@@ -273,12 +273,14 @@ $: unlockPassInputDOM && (
       </div>
     {/if}
   {:else}
+    <p>Note: All inputs are case sensitive, so remember where you use capital or small letters!</p>
+    <br/>
     <div class="input-container" title={c.tipLogin}>
       <label for="loginInput">login</label>
       <input name="loginInput" type="text" bind:value={login} placeholder="e.g. user@email.com/username">
     </div>
     <div class="input-container" title={c.tipUri}>
-      <label for="uriInput">uri</label>
+      <label for="uriInput">website address</label>
       <input name="uriInput" type="url" bind:value={uri} placeholder="e.g. myspace.com">
     </div>
     <br/>

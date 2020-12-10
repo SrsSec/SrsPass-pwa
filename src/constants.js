@@ -24,7 +24,7 @@ export const tipChildPass = 'This contains the child password to use as the pass
 //   `through another round of the argon2id KDF, to receive the desired set of cryptographically random bytes to derive a deterministic ` +
 //   `yet random password`
 export const tipLogin = 'Enter the login details here. Using either your "e-mail" or "username", or better yet, both in the form of "e-mail/username" is recommended'
-export const tipUri = 'Enter the URI (Uniform Resource Identifier) of the resource you are looking to create a password for. This will usually be a domain name, in the form of "domain.com"'
+export const tipUri = 'Enter the URI (Uniform Resource Identifier) of the resource you are looking to create a password for. In most cases, this can be a website name, in the form of "domainname.com".'
 export const tipIndex = `You would increment the index by 1, any time you may need to update the ${childPassTerm} for a site, either due to ` +
   `a site requiring periodic password updates or it being compromised. By incrementing, a completely different password will be generated.`
 export const tipPassLen = `Request a specific character length for your ${childPassTerm}, to suit your needs or conform to peculiar website requirements`

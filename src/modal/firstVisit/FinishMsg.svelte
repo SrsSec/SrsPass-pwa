@@ -11,7 +11,7 @@
 
   onMount(() => {
     lockNav(true)
-    childTitle.set(`Setup is complete!`)
+    childTitle.set(`Setup is complete! Click finish to use the App`)
   })
 
   onDestroy(() => {
