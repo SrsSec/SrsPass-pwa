@@ -1,6 +1,6 @@
 const { includes } = require('ramda')
 const path = require('path');
-const { IgnorePlugin } = require('webpack')
+const { IgnorePlugin, DefinePlugin } = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
@@ -8,6 +8,10 @@ const WorkboxPlugin = require('workbox-webpack-plugin');
 
 const mode = process.env.NODE_ENV || 'development';
 const prod = mode === 'production';
+
+const githash = require('child_process')
+  .execSync('git rev-parse HEAD')
+  .toString().trim()
 
 const WorkboxServiceWorker = new WorkboxPlugin.GenerateSW({
   //include: [path.resolve(__dirname, 'public')],
@@ -158,6 +162,9 @@ module.exports = {
     }),
     new IgnorePlugin(/^\.\/wordlists\/(?!english)/, /bip39\/src$/),
     ...(prod ? [WorkboxServiceWorker] : []),
+    new DefinePlugin({
+      'process.env.GIT_HASH': JSON.stringify(githash),
+    })
   ],
   devtool: prod ? false : 'source-map'
 };
