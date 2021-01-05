@@ -1,5 +1,12 @@
 # CHANGELOG
 
+### [0.1.3](https://github.com/SrsSec/SrsPass-pwa/compare/v0.1.2...v0.1.3) (2021-01-05)
+
+
+### Features
+
+* update footer w/ auto year & email & githash ([43bcf25](https://github.com/SrsSec/SrsPass-pwa/commit/43bcf2534ac9d50c3e4e9488d5fa271f6b2074f7))
+
 ### [0.1.2](https://github.com/SrsSec/SrsPass-pwa/compare/v0.1.1...v0.1.2) (2020-12-10)
 
 
