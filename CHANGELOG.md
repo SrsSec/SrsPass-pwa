@@ -1,5 +1,12 @@
 # CHANGELOG
 
+### [0.1.4](https://github.com/SrsSec/SrsPass-pwa/compare/v0.1.3...v0.1.4) (2021-01-14)
+
+
+### Features
+
+* **footer:** add docs link ([7241955](https://github.com/SrsSec/SrsPass-pwa/commit/724195508de110f383635eb36462ff70c9b23095))
+
 ### [0.1.3](https://github.com/SrsSec/SrsPass-pwa/compare/v0.1.2...v0.1.3) (2021-01-05)
 
 
