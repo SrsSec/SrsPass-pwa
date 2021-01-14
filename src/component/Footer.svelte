@@ -6,9 +6,8 @@ const currentYear = new Date().getFullYear()
   , email = 'srspass@srssec.com'
 </script>
 <footer>
-  &copy; 2020-{currentYear} -
-  <a href={"mailto:" + email}>
-    contact
-  </a> -
+  &copy; {currentYear} -
+  <a target="_blank" href="https://docs.srspass.com"> docs</a> -
+  <a href={"mailto:" + email}> contact</a> -
   v{version}-{shortHash}
 </footer>
