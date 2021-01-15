@@ -29,9 +29,9 @@
   let wordUser = ''
 
   function handleVerify() {
-    if (!isWordUserValid) return
-    ctr += 1
+    if (wordUser !== mnemonicArray[mixedArray[ctr]]) return
     wordUser = ''
+    ctr += 1
     return true
   }
 
