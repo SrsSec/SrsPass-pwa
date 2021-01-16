@@ -64,11 +64,11 @@ export function argon2(pass, salt, opt = {}) {
     const worker = new WorkerArgon2id()
     const params = { salt, ...opt }
     if (!params.hashLen) params.hashLen = 32
-    worker.postMessage({ pass, params })
     worker.onmessage = ({ data }) => {
       worker.terminate()
       resolve(data)
     }
+    worker.postMessage({ pass, params })
   })
 }
 
@@ -126,7 +126,7 @@ async function encryptSeedFromMnemonic(pass, mnemonic) {
   // and the parameters needed to recreate key and decipher the payload
   const encrypted = {
     v: 1, // versioning to support updates to container and handling thereof
-    key: { 
+    key: {
       salt,
       params: a2params.heavy
     },
