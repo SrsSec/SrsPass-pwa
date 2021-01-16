@@ -1,5 +1,5 @@
 import cbor from 'cbor'
-import WorkerArgon2id from 'worker-loader!@worker/argon2id.js'
+import WorkerArgon2id from '@worker/argon2id.worker.js'
 
 import bs58check from 'bs58check'
 import {

@@ -5,21 +5,29 @@ import argon2 from 'argon2-browser'
 // by using time + binary mem log > 26 on argon2id we should achieve a 1.16 time-area factor
 // safePassCalc is based off this
 
-const safeTimeCalc = mem =>
+export const safeTimeCalc = mem =>
   Math.max(27 - Math.ceil(Math.log(mem)/Math.log(2)), 1)
 
-async function argon2id({ pass, params }) {
+// argon2id with safe defaults if certain arguments are omitted
+// pass and salt are required
+const argon2id = async ({ pass, params }) => {
   try {
-    const { salt } = params
-    const mem = params.mem || (1 << 16)
+    // fallbacks
+    params.mem = params.mem || (1 << 16)
+    params.time = params.time > 1 ? params.time : safeTimeCalc(params.mem)
+    params.hashLen = params.hashLen || 32
+
+    const { salt, mem, time, hashLen } = params
+
     const res = await argon2.hash({
       pass
       , salt
       , mem
-      , time: params.time || safeTimeCalc
+      , time
       , type: argon2.ArgonType.Argon2id
-      , hashLen: params.hashLen || 32
+      , hashLen
     })
+
     return {
       res,
       params
@@ -29,7 +37,4 @@ async function argon2id({ pass, params }) {
   }
 }
 
-onmessage = async ({ data }) => {
-  // TODO: non destructured param may have useful props to inspect for security
-  postMessage(await argon2id(data))
-}
+export default argon2id
