@@ -14,6 +14,9 @@ console.log(exports)
 jest.mock("@worker/argon2id.worker.js")
 jest.setTimeout(20000);
 
+// helpers
+const hexToBytes = str => Uint8Array.from(Buffer.from(str, 'hex'))
+
 describe('a2params', () => {
   describe('heavy', () => {
     it('time should be 12', () => {
@@ -46,7 +49,6 @@ describe('a2params', () => {
 })
 
 describe('argon2(pass, salt, { time, mem, hashLen })', () => {
-  const hexToBytes = str => Uint8Array.from(Buffer.from(str, 'hex'))
 
   // https://github.com/D-Nice/argon2_bind/blob/master/tests/fixtures/from_c.nim#L332
   describe('Reference C Fixtures for Argon2id V0x13', () => {
@@ -90,6 +92,27 @@ describe('argon2(pass, salt, { time, mem, hashLen })', () => {
           .toBe(32) // default & fallback
         expect(params.mem)
           .toBe(1 << 16) // default & fallback
+      })
+    })
+  })
+})
+
+
+describe('getArgon2Hash(pass, salt, { time, mem, hashLen })', () => {
+  // https://github.com/D-Nice/argon2_bind/blob/master/tests/fixtures/from_c.nim#L332
+  describe('Reference C Fixtures for Argon2id V0x13', () => {
+
+    describe('case 1', () => {
+      const pass = 'password'
+        , salt = 'somesalt'
+        , opt = { time: 2 }
+      const expectedHashHex = '09316115d5cf24ed5a15a31a3ba326e5cf32edc24702987c02b6566f61913cf7'
+        , expectedHash = hexToBytes(expectedHashHex)
+
+      it('should compute expected argon2 hash', async() => {
+        const hash = await getArgon2Hash(pass, salt, opt)
+        expect(hash)
+          .toStrictEqual(expectedHash)
       })
     })
   })
