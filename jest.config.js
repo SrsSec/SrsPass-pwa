@@ -10,7 +10,6 @@ module.exports = {
     "^@worker/(.*)$": "<rootDir>/src/worker/$1"
   },
   transform: {
-    '^.+\\.js?$': 'babel-jest',
-    //"^.+\\.worker.[t|j]sx?$": "workerloader-jest-transformer"
+    '^.+\\.js?$': 'babel-jest'
   },
 }
