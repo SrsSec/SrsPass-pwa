@@ -33,19 +33,19 @@ export function argon2(pass, salt, opt = {}) {
   })
 }
 
-// unlike bip39, we derive using custom argon2 params instead of pbkdf2
-// TODO put in encryption
-const deriveMnemonicSeed = async (mnemonic) =>
-  await getArgon2Hash(mnemonic, 'SrsPass seed', a2params.heavy)
-
 // for the most part will be working with Buffer types
 // so this helper function helps avoid redundant await code
 export const getArgon2Hash = async (pass, salt, opt) =>
   (await argon2(pass, salt, opt)).res.hash
 
 // TODO put in encryption
-const deriveSeedEncryptionKey = async (pass, salt) =>
+export const deriveSeedEncryptionKey = async (pass, salt) =>
   await getArgon2Hash(pass, salt, a2params.heavy)
+
+// unlike bip39, we derive using custom argon2 params instead of pbkdf2
+// TODO put in encryption
+export const deriveMnemonicSeed = async mnemonic =>
+  await getArgon2Hash(mnemonic, 'SrsPass seed', a2params.heavy)
 
 export const deriveGeneratorPassword = async pass =>
   await getArgon2Hash(pass, 'SrsPass generator v0', a2params.heavy)
