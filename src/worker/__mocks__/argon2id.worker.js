@@ -1,4 +1,4 @@
-import argon2id from '@util/argon2id'
+import argon2id from '@util/crypto/argon2id'
 
 export default class mockedArgon2WebWorker {
   constructor() {
