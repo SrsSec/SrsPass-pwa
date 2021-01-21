@@ -7,9 +7,9 @@ import * as R from 'ramda'
 import {
   getArgon2Hash
   , a2params
-  , loadDecryptSeed
   , deriveGeneratorPassword
-} from '@util/crypto'
+} from '@util/crypto/kdf'
+import { loadDecryptSeed } from '@util/crypto/encryption'
 import * as c from '@/constants.js'
 import JSBI from 'jsbi'
 import {
