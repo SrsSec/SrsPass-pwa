@@ -8,10 +8,6 @@ export const a2params = {
     mem: (1 << 15)
   },
   light: {
-    time: 16,
-    mem: (1 << 12)
-  },
-  test: {
     time: 19,
     mem: (1 << 9)
   }

@@ -4,6 +4,8 @@ import {
   , a2params
 } from '@util/crypto/kdf'
 
+const a2light = a2params.light
+
 const concatBufWithStr = (b, s) =>
   Buffer.concat([b, Buffer.from(s, 'utf8')])
 
@@ -65,7 +67,7 @@ const deriveSrsPass = async (pass, salt, index, uri, login, srsPassLen, alphaArr
     {
       hashLen: srsPassLen*8,
       // FIXME switch to light, or make current test params, prod light
-      ...a2params.test
+      ...a2light
     }
   )
   return childPassFromBuffer64(hash, alphaArray)
