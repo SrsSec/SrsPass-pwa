@@ -1,12 +1,17 @@
 import argon2 from 'argon2-browser'
+
 // https://crypto.stackexchange.com/questions/48935/why-use-argon2i-or-argon2d-if-argon2id-exists
 // rules for minimum time/passes, should aim for 25 in general it seems to be safe
 // or could add algorithmic checks and pass/safe/unsafe param?
 // by using time + binary mem log > 26 on argon2id we should achieve a 1.16 time-area factor
-// safePassCalc is based off this
-
+//
+// https://crypto.stackexchange.com/questions/39996/does-the-balloon-hashing-paper-deprecate-argon2/40000#40000
+// based on additional reading, there has been mention of requiring 10 passes to ensure
+// side-channel resistance in argon2i
+//
+// safeTimeCalc is based off this
 export const safeTimeCalc = mem =>
-  Math.max(27 - Math.ceil(Math.log(mem)/Math.log(2)), 1)
+  Math.max(27 - Math.ceil(Math.log(mem)/Math.log(2)), 10)
 
 // argon2id with safe defaults if certain arguments are omitted
 // pass and salt are required
