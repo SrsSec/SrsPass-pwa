@@ -3,6 +3,7 @@ import {
   getArgon2Hash
   , a2params
 } from '@util/crypto/kdf'
+import { deriveAlphaArray } from '@util/srsPass/charsetter'
 
 const a2light = a2params.light
 
@@ -58,7 +59,15 @@ const transformUArrWithFormatToPassJSBI = (arr, alArr) =>
 const childPassFromBuffer64 = ({ buffer }, alphaArray) =>
   transformUArrWithFormatToPassJSBI(toUint64ArrayLE(buffer), alphaArray)
 
-const deriveSrsPass = async (pass, salt, index, uri, login, srsPassLen, alphaArray) => {
+const deriveSrsPass = async (
+  pass,
+  salt,
+  index,
+  uri,
+  login,
+  srsPassLen,
+  childPassFormat
+) => {
   const userParams = (index > 0 ? index : '') + uri + login
 
   const hash = await getArgon2Hash(
@@ -70,6 +79,7 @@ const deriveSrsPass = async (pass, salt, index, uri, login, srsPassLen, alphaArr
       ...a2light
     }
   )
+  const alphaArray = deriveAlphaArray(childPassFormat)
   return childPassFromBuffer64(hash, alphaArray)
 }
 export default deriveSrsPass

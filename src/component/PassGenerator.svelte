@@ -18,7 +18,6 @@ import {
   charsetDefinitions,
   dedupeChars,
   validatePassFormat,
-  deriveAlphaArray
 } from '@util/srsPass/charsetter'
 
 const msg = {
@@ -105,7 +104,6 @@ async function handleGenerateClick() {
   // index is omitted unless non-zero, to keep the salt from being too easily
   // identifiable by such a consistent marker in memory
 
-  const alphaArray = deriveAlphaArray(cpf)
   childPass = await deriveSrsPass(
     pass,
     salt,
@@ -113,7 +111,7 @@ async function handleGenerateClick() {
     uri,
     login,
     passLen,
-    alphaArray
+    cpf
   )
   generating = false
 }
