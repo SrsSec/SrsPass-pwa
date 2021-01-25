@@ -20,7 +20,7 @@ describe('a2params', () => {
       const { time } = a2params.heavy
       expect(time).toBe(12)
     })
-    it('mem should be 32KiB', () => {
+    it('mem should be 32MiB', () => {
       const { mem } = a2params.heavy
       expect(mem).toBe(32768)
     })
@@ -30,17 +30,17 @@ describe('a2params', () => {
     })
   })
   describe('light', () => {
-    it('time should be 16', () => {
+    it('time should be 19', () => {
       const { time } = a2params.light
-      expect(time).toBe(16)
+      expect(time).toBe(19)
     })
-    it('mem should be 4KiB', () => {
+    it('mem should be 512KiB', () => {
       const { mem } = a2params.light
-      expect(mem).toBe(4096)
+      expect(mem).toBe(512)
     })
-    it('mem should be 1 << 12', () => {
+    it('mem should be 1 << 9', () => {
       const { mem } = a2params.light
-      expect(mem).toBe(1 << 12)
+      expect(mem).toBe(1 << 9)
     })
   })
 })
