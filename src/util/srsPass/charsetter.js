@@ -14,9 +14,8 @@ export const dedupeChars = R.pipe(
   R.join('')
 )
 
-//TODO replace d as x, and x as * which seem more easier to reason about.
-charsetDict.d = charsetDict['0'] + charsetDict['A'] + charsetDict['a']
-charsetDict.x = charsetDict['d'] + charsetDict['#']
+charsetDict.x = charsetDict['0'] + charsetDict['A'] + charsetDict['a']
+charsetDict['*'] = charsetDict['x'] + charsetDict['#']
 charsetDict.c = ''
 // run through the dict and dedupe... should probably give warning
 // if there are dupes

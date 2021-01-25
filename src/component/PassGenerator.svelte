@@ -29,7 +29,7 @@ let unlocking = false
   , generating = false
   , unlockPass = ''
   , salt = ''
-  , pass = "p"
+  , pass = ""
   , childPass = ""
   , login = ""
   , uri = ""
@@ -37,7 +37,7 @@ let unlocking = false
   , index = 0
   , passLen = 20
   , customAlpha = ''
-  , childPassFormatDefault = 'x'
+  , childPassFormatDefault = '*'
   , childPassFormat = childPassFormatDefault
   , unlockPassInputDOM
   , showPass = false
