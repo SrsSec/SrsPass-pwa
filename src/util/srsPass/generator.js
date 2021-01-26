@@ -68,6 +68,7 @@ const deriveSrsPass = async (
   srsPassLen,
   childPassFormat
 ) => {
+  const alphaArray = deriveAlphaArray(childPassFormat)
   const userParams = (index > 0 ? index : '') + uri + login
 
   const hash = await getArgon2Hash(
@@ -79,7 +80,6 @@ const deriveSrsPass = async (
       ...a2light
     }
   )
-  const alphaArray = deriveAlphaArray(childPassFormat)
   return childPassFromBuffer64(hash, alphaArray)
 }
 export default deriveSrsPass
