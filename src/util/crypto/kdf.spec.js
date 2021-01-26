@@ -182,15 +182,13 @@ describe('deriveGeneratorPassword(pass)', () => {
     })
 
     describe('case 6 - full printable utf8', () => {
-      // https://github.com/bits/UTF-8-Unicode-Test-Documents/blob/master/UTF-8_sequence_separated/utf8_sequence_0-0xffff_assigned_printable.txt
       let pass
-      const expectedHash = new Uint8Array([125, 214, 148, 79, 140, 109, 12, 20, 36, 73, 59, 140, 182, 29, 241, 161, 128, 47, 45, 197, 79, 247, 180, 92, 181, 142, 234, 81, 64, 234, 65, 5])
 
       it('should derive expected hashed password', async() => {
-        pass = await readFile('tests/unit/misc/utf8_sequence_0-0xffff_assigned_printable.txt')
+        pass = await readFile('tests/unit/misc/utf8_sequence_0-0xffff_assigned_printable_unseparated.txt')
         const hash = await deriveGeneratorPassword(pass)
         expect(hash)
-          .toStrictEqual(expectedHash)
+          .toMatchSnapshot()
       })
     })
   })
