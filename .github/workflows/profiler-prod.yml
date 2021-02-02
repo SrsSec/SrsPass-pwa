@@ -1,8 +1,5 @@
 name: profiler-prod
 on:
-  push:
-    branches:
-    - feat-jest
   schedule:
     - cron: 0 15 * * 0 # run every sunday at 15:00 UTC
 jobs:
