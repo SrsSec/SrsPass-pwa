@@ -1,0 +1,21 @@
+name: auditor
+on:
+  push:
+    branches:
+    - master
+    - develop
+    - feat-jest
+  pull_request:
+    branches:
+    - master
+    - develop
+  schedule:
+    - cron: 0 15 * * 0 # run every sunday at 15:00 UTC
+jobs:
+  audit:
+    name: npm-audit
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - name: audit
+      run: npm audit
