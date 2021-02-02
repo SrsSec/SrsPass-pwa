@@ -10,12 +10,12 @@ on:
     - master
     - develop
 jobs:
-  build:
+  test:
     name: jest-test
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v1
     - name: npm-ci
       run: npm ci
-    - name: build
+    - name: test
       run: npm test
