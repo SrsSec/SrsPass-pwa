@@ -17,7 +17,7 @@ Copyright (c) 2020-present, Denis Milicevic
 This work is dual-licensed under
 
 - AGPL-3.0
-- Commercial license available upon request from commmercial@srssec.com
+- Commercial license available upon request from commercial@srssec.com
 
 As most users will find the AGPL-3.0 sufficient for their use, it is currently the sole license in the LICENSE file but not limited to it, and for anyone else the aforementioned commercial license can be made available.
 
