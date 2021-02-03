@@ -1,0 +1,13 @@
+name: profiler-prod
+on:
+  schedule:
+    - cron: 0 15 * * 0 # run every sunday at 15:00 UTC
+jobs:
+  profile:
+    name: lighthouse
+    runs-on: ubuntu-latest
+    steps:
+    - name: profile
+      run: npx lighthouse-ci https://app.srspass.com \
+        --score=90 \
+        --performance=80

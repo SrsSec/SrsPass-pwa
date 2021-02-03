@@ -1,7 +1,23 @@
 {
   "name": "srspass",
   "version": "0.1.4",
+  "engines": {
+    "node": ">=14.0.0",
+    "npm": ">=7.0.0"
+  },
   "devDependencies": {
+    "jest": "^26.6.3",
+    "serve": "^11.0.0",
+    "webpack-dev-server": "^3.3.1"
+  },
+  "scripts": {
+    "build": "cross-env NODE_ENV=production webpack",
+    "dev": "webpack-dev-server --client-log-level debug --content-base public --port 5000 --host 0.0.0.0",
+    "nsinstall": "npm install --ignore-scripts",
+    "release": ".github/release.sh",
+    "test": "jest"
+  },
+  "dependencies": {
     "argon2-browser": "^1.15.2",
     "base64-loader": "^1.0.0",
     "bip39": "^3.0.2",
@@ -15,21 +31,12 @@
     "jsbi": "^3.1.4",
     "mini-css-extract-plugin": "^0.6.0",
     "ramda": "^0.27.1",
-    "serve": "^11.0.0",
     "style-loader": "^0.23.1",
     "svelte": "^3.0.0",
     "svelte-loader": "^2.13.6",
     "webpack": "^4.30.0",
     "webpack-cli": "^3.3.0",
-    "webpack-dev-server": "^3.3.1",
     "workbox-webpack-plugin": "^5.1.4",
     "worker-loader": "^3.0.2"
-  },
-  "scripts": {
-    "build": "cross-env NODE_ENV=production webpack",
-    "dev": "webpack-dev-server --client-log-level debug --content-base public --port 5000 --host 0.0.0.0",
-    "nsinstall": "npm install --ignore-scripts",
-    "release": ".github/release.sh"
-  },
-  "dependencies": {}
+  }
 }

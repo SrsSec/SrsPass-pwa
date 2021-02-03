@@ -5,7 +5,6 @@
    */
   import { onMount, onDestroy } from 'svelte'
   import { mnemonic } from '@store/mnemonic.js'
-  import { saveEncryptSeedFromMnemonic } from '@util/crypto.js'
   import { passTerm, passHtml, mnemonicTerm, mnemonicHtml, childPassesHtml } from '@/constants.js'
   import { childTitle, lockNav } from '@store/firstVisitNav.js'
 

@@ -1,4 +1,4 @@
-import { storageKeys } from '@util/crypto'
+import { storageKeys } from '@util/crypto/encryption'
 
 export const needsSetup = () => {
   // TODO should check if it is a proper formatted encrypted blob

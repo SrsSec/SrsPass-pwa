@@ -1,0 +1,20 @@
+name: tester-unit
+on:
+  push:
+    branches:
+    - master
+    - develop
+  pull_request:
+    branches:
+    - master
+    - develop
+jobs:
+  test:
+    name: jest-test
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - name: npm-ci
+      run: npm ci
+    - name: test
+      run: npm test

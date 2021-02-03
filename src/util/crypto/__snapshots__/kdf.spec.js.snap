@@ -1,0 +1,38 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`deriveGeneratorPassword(pass) SrsPass generator v0 case 6 - full printable utf8 should derive expected hashed password 1`] = `
+Uint8Array [
+  170,
+  224,
+  164,
+  175,
+  76,
+  177,
+  91,
+  146,
+  189,
+  139,
+  11,
+  195,
+  175,
+  222,
+  27,
+  5,
+  102,
+  56,
+  223,
+  254,
+  67,
+  66,
+  89,
+  85,
+  185,
+  65,
+  234,
+  101,
+  43,
+  72,
+  213,
+  146,
+]
+`;

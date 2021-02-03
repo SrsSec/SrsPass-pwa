@@ -5,7 +5,7 @@ zxcvbn.js bundled and minified is about 400kB gzipped or 820kB uncompressed, mos
    */
   import { onMount, onDestroy } from 'svelte'
   import { mnemonic } from '@store/mnemonic.js'
-  import { saveEncryptSeedFromMnemonic } from '@util/crypto.js'
+  import { saveEncryptSeedFromMnemonic } from '@util/crypto/encryption.js'
   import { mnemonicTerm, passTerm, passHtml } from '@/constants.js'
   import { childLockNext, childTitle, lockNav } from '@store/firstVisitNav.js'
   import { disableAnnoyingMobileInputBugs } from '@util/helper.js'
