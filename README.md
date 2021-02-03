@@ -12,7 +12,7 @@ The documentation is available at https://docs.srspass.com
 
 ## License
 
-Copyright (c) Denis Milicevic
+Copyright (c) 2020-present, Denis Milicevic
 
 This work is dual-licensed under
 
