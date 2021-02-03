@@ -7,7 +7,6 @@ You must sign the CLA if you're an outside contributor before any commits can be
 By signing this Agreement, the undersigned party (“**You**”) understand, accept and agree to the following terms and conditions for your present and future Contributions submitted to SrsPass (the “**Original Code**”).  “**Contribution**” shall mean the code, documentation or any work of authorship, including any modifications or additions to an existing work that is submitted by you in connection with the Original Code.
 
 1. **Assignment**. By submitting a Contribution you assign to the copyright holder of the Original Code to which you contributed (the “**Copyright Holder**”) all rights, title and interest you have in the Contribution, including but not limited to, the copyrights, and the right to use, distribute and change the license of the Contribution, and you waive any rights, including any moral rights, database rights, etc., that may affect the Copyright Holder’s ownership of the copyright in the Contribution.  In the event that the assignment above shall be determined by competent court as invalid, you hereby grant to the Copyright Holder a perpetual, worldwide, exclusive, no-charge, royalty-free, irrevocable license to use the Contribution and any underlying intellectual property (including patents, if any) in any manner, including without limitation to reproduce, prepare derivative works of, publicly display, publicly perform, sub-license, and distribute your Contributions and such derivative works.
-
 By executing this Agreement which provides for the above assignment, you agree that the Copyright Holder shall have the right to make any change to your Contribution, including but not limited to, to apply dual licensing model on the Contribution.
 
 2. **Your employer**. You represent that you are legally entitled to grant the above assignment and license. If your employer has rights to intellectual property that is included in your Contributions, you represent that you have received the necessary permission from your employer to make these Contributions and consummate the above assignment and grant of license and that your employer has waived such rights for your Contributions.
@@ -25,8 +24,11 @@ By filling the information below, I have agreed and accepted on my behalf (and, 
 ---
 
 Github Username:
+
 Legal Name (optional):
+
 Organization Name (if none, type “N/A”):
-Date Signed:
+
+Date Signed (yyyy-mm-dd):
 
 ---
