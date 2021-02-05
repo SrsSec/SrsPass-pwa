@@ -1,5 +1,28 @@
 # CHANGELOG
 
+## [0.2.0](https://github.com/SrsSec/SrsPass-pwa/compare/v0.1.4...v0.2.0) (2021-02-05)
+
+
+### ⚠ BREAKING CHANGES
+
+* the keys of charsetDict have been changed to ones that seem more logical, in that x covers all built-in alphanumeric charsets, and * expands this to all + symbols, as the generaly pattern we have atm to denote symbols being present, is by defining the key itself with a symbol, and the wildcard symbol seems perfect for this
+
+### Features
+
+* extract kdf code into own file ([f79ae99](https://github.com/SrsSec/SrsPass-pwa/commit/f79ae994658b89041afefbfdb719524f50bb23ab))
+* linkify commit hash in footer to source code ([3491d10](https://github.com/SrsSec/SrsPass-pwa/commit/3491d10ecab47cefe5b57f22d2fcf040cfa8c292))
+
+
+### Bug Fixes
+
+* fixes worker messaging order ([606317b](https://github.com/SrsSec/SrsPass-pwa/commit/606317bbd683e13b76ae216dcdb06f1f7717e96e))
+* reactivity bug in verify, inc ctr twice instead of once ([8f352c5](https://github.com/SrsSec/SrsPass-pwa/commit/8f352c534fc006e5ca7e830579bdeaeb2510d4ae))
+* **argon2:** increase safetimeCalc min passes ([42b9972](https://github.com/SrsSec/SrsPass-pwa/commit/42b9972ab9ac53fd0c48bd3d1daf3ba456f3d477))
+* **argon2:** sets light to correct prod used vars ([c848b31](https://github.com/SrsSec/SrsPass-pwa/commit/c848b318aa3cf90cfdf9513aa70659ffb2c45161))
+
+
+* update charsetDict d/x to x/* ([d7125b4](https://github.com/SrsSec/SrsPass-pwa/commit/d7125b47e0b443a3a95d2a6d896f57231370690e))
+
 ### [0.1.4](https://github.com/SrsSec/SrsPass-pwa/compare/v0.1.3...v0.1.4) (2021-01-14)
 
 
