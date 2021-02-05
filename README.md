@@ -23,4 +23,4 @@ As most users will find the AGPL-3.0 sufficient for their use, it is currently t
 
 ## Contributing
 
-If interested in contributing, please read & sign our CLA in CONTRIBUTING.md with a commit, and request a PR into the CLA branch.
+If interested in contributing, please read & sign our CLA in CONTRIBUTING.md with a commit, and submit a PR into the CLA branch.
