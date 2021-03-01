@@ -128,8 +128,15 @@ $: customAlpha = dedupeChars(customAlpha)
 $: charsetDict.c = customAlpha
 $: if(customAlpha.length === 1 &&
   childPassFormat === childPassFormatDefault) childPassFormat = 'c'
-$: unlockPassInputDOM && (
-  showPass ? unlockPassInputDOM.setAttribute('type', 'text') : unlockPassInputDOM.setAttribute('type', 'password'))
+$: {
+  // NOTE sadly the input type can't be dynamic when there's two-way binding
+  // else the unlockPassInput element would persist showPass settings inbetween
+  //
+  // TODO optional chaining with ?. would be nice to get workign here...
+  const elem = document.getElementById('unlockPassInput')
+  if (elem) elem.setAttribute('type', showPass ? 'text' : 'password')
+}
+$: unlocking && (showPass = false)
 </script>
 
 <div>
@@ -140,7 +147,7 @@ $: unlockPassInputDOM && (
     {:else}
       <div>
         <label for="unlockPassInput" title={c.tipUnlockPass}>Please enter your {@html c.passHtml} to begin!</label>
-        <input autofocus={!needsSetup()} id="unlockPassInput" title={c.tipUnlockPass} name="unlockPassInput" type="text" bind:value={unlockPass} disabled={unlocking} on:keypress={handleUnlockEnter}>
+        <input autofocus={!needsSetup()} id="unlockPassInput" title={c.tipUnlockPass} name="unlockPassInput" type="password" bind:value={unlockPass} disabled={unlocking} on:keypress={handleUnlockEnter}>
         <button title={c.tipUnlockPass} on:click={handleUnlockClick} disabled={unlocking}>
           Unlock
         </button>
