@@ -1,5 +1,17 @@
 # CHANGELOG
 
+### [0.2.1](https://github.com/SrsSec/SrsPass-pwa/compare/v0.2.0...v0.2.1) (2021-03-03)
+
+
+### Features
+
+* replace contact link w/ SrsSec home link & default target to _blank ([f873e18](https://github.com/SrsSec/SrsPass-pwa/commit/f873e182c84a757655bbd0f108df011b2f03606f))
+
+
+### Bug Fixes
+
+* unlockPassInput switch to cleartext on wrong pass ([35f1cf2](https://github.com/SrsSec/SrsPass-pwa/commit/35f1cf296d6ce5114a4fe82d2d18ea0cbd757186))
+
 ## [0.2.0](https://github.com/SrsSec/SrsPass-pwa/compare/v0.1.4...v0.2.0) (2021-02-05)
 
 
