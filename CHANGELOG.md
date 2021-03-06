@@ -1,5 +1,17 @@
 # CHANGELOG
 
+### [0.2.2](https://github.com/SrsSec/SrsPass-pwa/compare/v0.2.1...v0.2.2) (2021-03-06)
+
+
+### Features
+
+* clear child pass on other inputs changing ([e234c8a](https://github.com/SrsSec/SrsPass-pwa/commit/e234c8ae5598f1b48324ad371a7da662a2defd44))
+
+
+### Bug Fixes
+
+* trim mnemonic input ([19b7819](https://github.com/SrsSec/SrsPass-pwa/commit/19b78192a54a1e795590199b1011a48854a77f7b))
+
 ### [0.2.1](https://github.com/SrsSec/SrsPass-pwa/compare/v0.2.0...v0.2.1) (2021-03-03)
 
 
