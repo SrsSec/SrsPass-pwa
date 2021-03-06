@@ -120,6 +120,22 @@ const blacklistDecimal = event =>
   event.keyCode === 190 && event.preventDefault()
 
 const isEmpty = x => !x || x.length === 0
+const isEmptyChildPass = () => isEmpty(childPass)
+
+// input triggers
+// NOTE update these if adding any new inputs to their respective cats
+let baseInputs = [login, uri]
+const baseInputsTrigger = () => baseInputs = baseInputs
+$: login, uri, baseInputsTrigger()
+
+let advInputs = [
+  index,
+  passLen,
+  childPassFormat,
+  customAlpha
+]
+const advInputsTrigger = () => advInputs = advInputs
+$: index, passLen, childPassFormat, customAlpha, advInputsTrigger()
 
 $: needsCredentials = isEmpty(pass) || isEmpty(salt)
 $: index = Math.floor(index)
@@ -137,6 +153,8 @@ $: {
   if (elem) elem.setAttribute('type', showPass ? 'text' : 'password')
 }
 $: unlocking && (showPass = false)
+// clear password on any other input being changed
+$: baseInputs, advInputs, !isEmptyChildPass() && (childPass = '')
 </script>
 
 <div>
