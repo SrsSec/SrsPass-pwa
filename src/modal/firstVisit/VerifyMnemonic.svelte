@@ -54,7 +54,7 @@
   // could lessen required verified words by passing something lower than menmonic length
   // ODOT research if we should do whole phrase, based on user feedback and safety...
   // yes, it is needed, user miss the words at times...
-  $: verified = DEBUG ? ctr >= 1 : ctr >= mnemonicArray.length
+  $: verified = DEBUG ? ctr >= 2 : ctr >= mnemonicArray.length
   $: verified && childLockNext.set(false)
   $: placeholder = verified ?
       verifySuccess :
