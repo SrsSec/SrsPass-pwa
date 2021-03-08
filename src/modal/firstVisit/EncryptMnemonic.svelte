@@ -63,6 +63,7 @@ zxcvbn.js bundled and minified is about 400kB gzipped or 820kB uncompressed, mos
 <!--><textarea class:red-border="{mnemonicUser.length > 0 && !isMnemonicUserValid}" placeholder="Enter your {passTerm} here..." bind:value={mnemonicUser}/><-->
 <br/>
 <input id="encryptInputPass"
+       autofocus
        disabled={encrypting || encrypted}
        type="text"
        required
