@@ -24,6 +24,8 @@ const msg = {
   passInput: "Enter password here..."
   , loading:  "Generating..."
 }
+
+const regexHostname = `^([a-zA-Z0-9]|[a-zA-Z0-9][a-zA-Z0-9\-]{0,61}[a-zA-Z0-9])(\.([a-zA-Z0-9]|[a-zA-Z0-9][a-zA-Z0-9\-]{0,61}[a-zA-Z0-9]))*$`
 let unlocking = false
   , generating = false
   , unlockPass = ''
@@ -155,6 +157,8 @@ $: {
 $: unlocking && (showPass = false)
 // clear password on any other input being changed
 $: baseInputs, advInputs, !isEmptyChildPass() && (childPass = '')
+$: login = login.trim()
+$: uri = uri.trim()
 </script>
 
 <div>
@@ -175,7 +179,7 @@ $: baseInputs, advInputs, !isEmptyChildPass() && (childPass = '')
       </div>
     {/if}
   {:else}
-    <p>Note: All inputs are case sensitive, so remember where you use capital or small letters!</p>
+    <p>Note: All inputs are cAsE sensitive!</p>
     <br/>
     <div class="input-container" title={c.tipLogin}>
       <label for="loginInput">login</label>
@@ -183,7 +187,7 @@ $: baseInputs, advInputs, !isEmptyChildPass() && (childPass = '')
     </div>
     <div class="input-container" title={c.tipUri}>
       <label for="uriInput">website address</label>
-      <input name="uriInput" type="url" bind:value={uri} placeholder="e.g. myspace.com">
+      <input name="uriInput" pattern={regexHostname} bind:value={uri} placeholder="e.g. wikipedia.org">
     </div>
     <br/>
     <div class="checkbox">
