@@ -71,7 +71,7 @@
   autofocus
   id="verifyInput"
   on:blur={() => handleVerify()} on:keydown={handleKeydown} disabled={verified} class:red-border="{wordUser.length > 0 && !isWordUserValid && !verified}" {placeholder} bind:value={wordUser}/>
-<button id="verifyWord" disabled={wordUser.length === 0} on:click={handleVerify}>
+<button id="verifyWord" disabled={verified || wordUser.length === 0} on:click={handleVerify}>
   Verify
 </button>
 
