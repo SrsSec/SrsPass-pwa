@@ -2,7 +2,7 @@
   import { onMount, onDestroy } from 'svelte'
   import { mnemonic } from '@store/mnemonic.js'
   import { validateMnemonic } from 'bip39'
-  import { verifySuccess, mnemonicHtml, mnemonicTerm } from '@/constants.js'
+  import { verifySuccess, verifySkip, mnemonicHtml, mnemonicTerm } from '@/constants.js'
   import { childLockNext, childTitle, lockNav } from '@store/firstVisitNav.js'
   import { disableAnnoyingMobileInputBugs } from '@util/helper.js'
 
@@ -48,18 +48,18 @@
     }
   }
 
+
   $: wordIdx = mixedArray[ctr]
   $: currentWord = mnemonicArray[wordIdx]
   $: wordUser = wordUser.trim()
   $: isWordUserValid = wordUser === currentWord
-  // could lessen required verified words by passing something lower than menmonic length
-  // ODOT research if we should do whole phrase, based on user feedback and safety...
-  // yes, it is needed, user miss the words at times...
+  // TODO add something to a logging store, to indicate user has done a skip
+  $: if(wordUser === 'SKIP') { verified = true; wordUser = verifySkip }
   $: verified = DEBUG ? ctr >= 2 : ctr >= mnemonicArray.length
   $: verified && childLockNext.set(false)
   $: placeholder = verified ?
       verifySuccess :
-      `Enter Word #${wordIdx + 1} then hit verify or enter!`
+      `Enter Word #${wordIdx + 1} then hit verify/enter!${'\n'}Typing SKIP ends verification early...`
 
 </script>
 

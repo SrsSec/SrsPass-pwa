@@ -6,6 +6,7 @@ export const appTerm = 'SrsPass'
 export const mnemonicTerm = 'Backup Phrase'
 export const mnemonicHtml = `<strong>${mnemonicTerm.toLowerCase()}</strong>`
 export const verifySuccess = `Verification complete! Make sure to keep your ${mnemonicTerm} stored for future use.`
+export const verifySkip = 'Skipping voids your warranty! It is your responsibility to ensure you have a correct copy of your backup phrase.'
 
 export const passTerm = 'Unlock Password'
 export const passHtml = `<strong>${passTerm.toLowerCase()}</strong>`
