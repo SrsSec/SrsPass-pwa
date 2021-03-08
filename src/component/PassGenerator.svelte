@@ -223,9 +223,11 @@ $: uri = uri.trim()
       <div class="input-container" title={c.tipChildPass}>
         <textarea style="width:100%" placeholder="Copy me after generating!" bind:value={childPass} disabled />
       </div>
+      {#if navigator.clipboard}
       <button disabled={childPass.length === 0} on:click={handleCopyClick}>
         copy
       </button>
+      {/if}
     </div>
   {/if}
 </div>
