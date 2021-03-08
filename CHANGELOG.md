@@ -1,5 +1,21 @@
 # CHANGELOG
 
+### [0.2.3](https://github.com/SrsSec/SrsPass-pwa/compare/v0.2.2...v0.2.3) (2021-03-08)
+
+
+### Features
+
+* add autofocus to encrypt pass input ([92c3eaf](https://github.com/SrsSec/SrsPass-pwa/commit/92c3eaff79b44a13df65360f58e37d7fdf1fbc8a))
+* add regex/trim to uri/login ([b7e53b8](https://github.com/SrsSec/SrsPass-pwa/commit/b7e53b8b24a900bc905769de31993eb4f5b2fbff))
+* add SKIP option to verify step ([44002ea](https://github.com/SrsSec/SrsPass-pwa/commit/44002ea54d97767e45173f778409de0476ac3ce7))
+* keep focus on text input during verify ([1b26de9](https://github.com/SrsSec/SrsPass-pwa/commit/1b26de95a66f9bce15c8ff4f36deca71f1ea5cc9))
+
+
+### Bug Fixes
+
+* disable verify btn when verification completes ([e70c56d](https://github.com/SrsSec/SrsPass-pwa/commit/e70c56d6e9b0641ff5423fad7e926c9b668d7fca))
+* only display copy btn if clipboard is available ([8207c21](https://github.com/SrsSec/SrsPass-pwa/commit/8207c218f6ef07c2e0dd23001e71827d3de197c7))
+
 ### [0.2.2](https://github.com/SrsSec/SrsPass-pwa/compare/v0.2.1...v0.2.2) (2021-03-06)
 
 
