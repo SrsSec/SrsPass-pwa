@@ -84,6 +84,7 @@
     padding: 1rem;
     border-radius: 0.2em;
     box-shadow: 0 3px 10px #555;
+    overflow-y: scroll;
   }
   button {
     margin: 0.5em 1em;
