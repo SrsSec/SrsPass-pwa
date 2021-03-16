@@ -1,6 +1,6 @@
 {
   "name": "srspass",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "engines": {
     "node": ">=14.0.0",
     "npm": ">=7.0.0"

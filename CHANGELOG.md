@@ -1,5 +1,14 @@
 # CHANGELOG
 
+### [0.2.4](https://github.com/SrsSec/SrsPass-pwa/compare/v0.2.3...v0.2.4) (2021-03-16)
+
+
+### Features
+
+* add scroll to nav modal container ([f4ecd2e](https://github.com/SrsSec/SrsPass-pwa/commit/f4ecd2efd69730bbedc67e94fb58e91581b8c188))
+* add scroll via auto to nav modal container ([40d9009](https://github.com/SrsSec/SrsPass-pwa/commit/40d9009c89671efbad2e992b5833b1869df0d6a5))
+* add step # to nav modal ([fc1ce18](https://github.com/SrsSec/SrsPass-pwa/commit/fc1ce183ef136011934f8078d5405ca6fee1267f))
+
 ### [0.2.3](https://github.com/SrsSec/SrsPass-pwa/compare/v0.2.2...v0.2.3) (2021-03-08)
 
 
