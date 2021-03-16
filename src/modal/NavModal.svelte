@@ -51,6 +51,7 @@
           </div>
         {/if}
         <button disabled={lockPrev()} on:click={() => idx -= 1}>Prev</button>
+        <span>{idx + 1}/{bodies.length}</span>
         <button disabled={lockNext()} on:click={() => idx += 1}>Next</button>
       </div>
     </div>
