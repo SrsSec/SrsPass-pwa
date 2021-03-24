@@ -88,7 +88,7 @@ export async function saveEncryptSeedFromMnemonic(pass, mnemonic) {
     const blob = await encryptSeedFromMnemonic(pass, mnemonic)
     localStorage.setItem(storageKeys.mnemonicSeed, blob)
   } catch (e) {
-    console.err(e)
+    console.error(e)
     return false
   }
   return true
