@@ -38,6 +38,11 @@ function storeMnemonicInSession(mnemonicString) {
   return true
 }
 
+export function clearMnemonicInSession() {
+  sessionStorage.removeItem(mnemonicStoreKey)
+  return true
+}
+
 function generateNewMnemonicAndStore() {
   const mnemonicNew = bip39.generateMnemonic(mnemonicBits)
   storeMnemonicInSession(mnemonicNew)
@@ -45,7 +50,7 @@ function generateNewMnemonicAndStore() {
 }
 
 export function getSessionStoredMnemonic() {
-  try { 
+  try {
     const mnemonicStore = sessionStorage.getItem(mnemonicStoreKey)
     if (mnemonicStore === null) return
     const mnemonicMaybe = bip39.entropyToMnemonic(

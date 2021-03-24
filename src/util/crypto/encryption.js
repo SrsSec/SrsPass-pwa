@@ -81,16 +81,11 @@ async function decryptMnemonicSeedBlob(pass, blob) {
   return payload
 }
 
-// returns bool on success or fail
-// TODO make sure to catch any exceptions at calls of this
+// returns true on success
+// NOTE make sure to catch any exceptions or check return at calls of this
 export async function saveEncryptSeedFromMnemonic(pass, mnemonic) {
-  try {
-    const blob = await encryptSeedFromMnemonic(pass, mnemonic)
-    localStorage.setItem(storageKeys.mnemonicSeed, blob)
-  } catch (e) {
-    console.error(e)
-    return false
-  }
+  const blob = await encryptSeedFromMnemonic(pass, mnemonic)
+  localStorage.setItem(storageKeys.mnemonicSeed, blob)
   return true
 }
 

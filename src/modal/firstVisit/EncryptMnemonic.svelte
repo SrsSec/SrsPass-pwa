@@ -4,7 +4,7 @@
 zxcvbn.js bundled and minified is about 400kB gzipped or 820kB uncompressed, most of which is dictionaries. Consider these tips if you're noticing page load latency on your site.
    */
   import { onMount, onDestroy } from 'svelte'
-  import { mnemonic } from '@store/mnemonic.js'
+  import { mnemonic, clearMnemonicInSession } from '@store/mnemonic.js'
   import { saveEncryptSeedFromMnemonic } from '@util/crypto/encryption.js'
   import { mnemonicTerm, passTerm, passHtml } from '@/constants.js'
   import { childLockNext, childTitle, lockNav } from '@store/firstVisitNav.js'
@@ -34,7 +34,13 @@ zxcvbn.js bundled and minified is about 400kB gzipped or 820kB uncompressed, mos
 
   async function handleConfirm() {
     encrypting = true
-    encrypted = await saveEncryptSeedFromMnemonic(passUser, $mnemonic)
+    try {
+      encrypted = await saveEncryptSeedFromMnemonic(passUser, $mnemonic)
+      clearMnemonicInSession()
+    } catch(e) {
+      console.error(e)
+      alert(`Encountered error during encryption step!\n\nError:\n${e.message}`)
+    }
     encrypting = false
   }
 
