@@ -3,28 +3,34 @@
   import { mnemonic } from '@store/mnemonic.js'
   import { validateMnemonic } from 'bip39'
   import { verifySuccess, verifySkip, mnemonicHtml, mnemonicTerm } from '@/constants.js'
-  import { childLockNext, childTitle, lockNav } from '@store/firstVisitNav.js'
+  import { childLockNext, childTitle, childFocus, lockNav } from '@store/firstVisitNav.js'
   import { disableAnnoyingMobileInputBugs } from '@util/helper.js'
 
+  // NOTE was used for verifying only 2 words during dev
+  // but skip keyword made its use obsolete
   const DEBUG = process.env.NODE_ENV === 'development'
 
   // lock navigation on mount, and return a bound function which unlocks
   // this returned function will be run onDestroy lifetime
   // onMount(() => setNav(true) && setNav.bind(null, false))
   onMount(() => {
-    lockNav(true)
+    childLockNext.set(true)
+    // needed here because autofocus doesn't trigger on:focus on the textarea
+    childFocus.set(true)
     childTitle.set(`Verify your ${mnemonicTerm}`)
     disableAnnoyingMobileInputBugs('TEXTAREA')
   })
 
   onDestroy(() => {
     lockNav(false)
+    childFocus.set(false)
     childTitle.set(null)
   })
 
   const mnemonicArray = $mnemonic.split(' ')
   const mixedArray = Array(...Array(mnemonicArray.length).keys())
     .sort(() => Math.random() - .5)
+  const minCtrToSkip = 1
   let ctr = 0
   let wordUser = ''
 
@@ -53,24 +59,31 @@
   $: currentWord = mnemonicArray[wordIdx]
   $: wordUser = wordUser.trim()
   $: isWordUserValid = wordUser === currentWord
+  $: wordsRemaining = mnemonicArray.length - ctr
+  $: skippable = ctr >= minCtrToSkip
   // TODO add something to a logging store, to indicate user has done a skip
-  $: if(wordUser === 'SKIP') { verified = true; wordUser = verifySkip }
-  $: verified = DEBUG ? ctr >= 2 : ctr >= mnemonicArray.length
+  $: if(wordUser === 'SKIP' && skippable) { verified = true; wordUser = verifySkip }
+  $: verified = wordsRemaining <= 0
   $: verified && childLockNext.set(false)
   $: placeholder = verified ?
       verifySuccess :
-      `Enter Word #${wordIdx + 1} then hit verify/enter!${'\n'}Typing SKIP ends verification early...`
+      `Enter Word #${wordIdx + 1} then hit verify/enter!${skippable ? '\nType SKIP to end verification early...' : ''}`
 
 </script>
 
 <p>
-  Please verify your {@html mnemonicHtml} phrase here. Enter the word requested in the textbox (shows it when empty)!
+  Please verify your {@html mnemonicHtml} phrase here. Enter the word # requested in the textbox (shows it when empty)! If you don't have the 12 words, click the <em>Prev</em> button to go back and save them first.
 </p>
+{#if wordsRemaining > 0}
+  <p>
+    {wordsRemaining} word(s) left to verify
+  </p>
+{/if}
 <!-- svelte-ignore a11y-autofocus -->
 <textarea
   autofocus
   id="verifyInput"
-  on:blur={() => handleVerify()} on:keydown={handleKeydown} disabled={verified} class:red-border="{wordUser.length > 0 && !isWordUserValid && !verified}" {placeholder} bind:value={wordUser}/>
+  on:focus={() => childFocus.set(true)} on:blur={() => { childFocus.set(false); handleVerify(); }} on:keydown={handleKeydown} disabled={verified} class:red-border="{wordUser.length > 0 && !isWordUserValid && !verified}" {placeholder} bind:value={wordUser}/>
 <button id="verifyWord" disabled={verified || wordUser.length === 0} on:click={handleVerify}>
   Verify
 </button>
