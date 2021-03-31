@@ -42,6 +42,7 @@ let unlocking = false
   , childPassFormat = childPassFormatDefault
   , unlockPassInputDOM
   , showPass = false
+  , showChildPass = false
 
 charsetDict.c = customAlpha
 
@@ -220,8 +221,14 @@ $: uri = uri.trim()
       <button on:click={handleGenerateClick}>
         generate {@html c.childPassHtml}
       </button>
-      <div class="input-container" title={c.tipChildPass}>
-        <textarea style="width:100%" placeholder="Copy me after generating!" bind:value={childPass} disabled />
+      <div class="input-container" title={c.tipChildPass} on:click={() => showChildPass = !showChildPass}>
+        <textarea
+          class="{ childPass.length > 0 && !showChildPass ? 'text-blur' : ''}"
+          style="width:100%;"
+          placeholder="Copy me after generating!"
+          bind:value={childPass}
+          disabled
+        />
       </div>
       {#if navigator.clipboard}
       <button disabled={childPass.length === 0} on:click={handleCopyClick}>
@@ -247,5 +254,9 @@ $: uri = uri.trim()
   .checkbox input {
     width: auto;
     margin-left: 0.6rem;
+  }
+  .text-blur {
+    color: transparent;
+    text-shadow: rgba(0,0,0,0.8) 0 0 0.75rem;
   }
 </style>
