@@ -1,5 +1,20 @@
 # CHANGELOG
 
+### [0.2.5](https://github.com/SrsSec/SrsPass-pwa/compare/v0.2.4...v0.2.5) (2021-04-01)
+
+
+### Features
+
+* add text blur toggle to child pass output ([58fca54](https://github.com/SrsSec/SrsPass-pwa/commit/58fca54b31413f9b23b472c7b473690990eb2027))
+* improve mnemonic verification UX ([a4f2939](https://github.com/SrsSec/SrsPass-pwa/commit/a4f2939db2c4ed9da92a9262a809dd2a923b48af))
+
+
+### Bug Fixes
+
+* blank page when nojs by adding noscript notice ([e77cbed](https://github.com/SrsSec/SrsPass-pwa/commit/e77cbedd6ce26842a270d5611b02603b2829b2cc))
+* console.err -> error typo ([65ad71c](https://github.com/SrsSec/SrsPass-pwa/commit/65ad71c8bd0e6e1984ffb260ed67f89cafe0ccc8))
+* rm entropy from session after encryption ([866acc0](https://github.com/SrsSec/SrsPass-pwa/commit/866acc00c73a187ca8175536d9dd40f9606bfe7c))
+
 ### [0.2.4](https://github.com/SrsSec/SrsPass-pwa/compare/v0.2.3...v0.2.4) (2021-03-16)
 
 
