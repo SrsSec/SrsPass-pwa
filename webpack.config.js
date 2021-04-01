@@ -32,12 +32,8 @@ const WorkboxServiceWorker = new WorkboxPlugin.GenerateSW({
       handler: 'CacheFirst',
     },
     {
-      urlPattern: '/index.html',
-      handler: 'CacheFirst',
-    },
-    {
       urlPattern: '/',
-      handler: 'CacheFirst',
+      handler: 'StaleWhileRevalidate',
     },
     {
       urlPattern: '/bundle.js',
