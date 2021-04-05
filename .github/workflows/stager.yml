@@ -1,0 +1,10 @@
+on:
+  push:
+    branches:
+    - develop
+jobs:
+  stage:
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          curl -X POST -u "SrsSec-CHAPPiE:${{ secrets.PAT_CHAPPIE }}" -H "Accept: application/vnd.github.v3+json" https://api.github.com/repos/SrsSec-CHAPPiE/bot-stage-SrsPass/actions/workflows/stage.yaml/dispatches -d '{"ref":"master"}'
