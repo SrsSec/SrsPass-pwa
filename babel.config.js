@@ -4,9 +4,25 @@ module.exports = {
       '@babel/preset-env',
       {
         targets: {
-          esmodules: true,
+          browsers: ["> 1%, not dead"]
         },
+        modules: false
       },
     ],
   ],
+  env: {
+    // for jest
+    test: {
+      presets: [
+        [
+          '@babel/preset-env',
+          {
+            targets: {
+              esmodules: true,
+            },
+          },
+        ],
+      ],
+    }
+  }
 }
