@@ -1,28 +1,37 @@
 <script>
   // firstVisit Nav Modal
+
+  // Static load lighter weight parts, dynaload others incrementally
   import NavModal from '@modal/NavModal.svelte'
   import WelcomeDescription from '@modal/firstVisit/WelcomeDescription.svelte'
-  import SetupMsg from '@modal/firstVisit/SetupMsg.svelte'
-  import ImportMnemonic from '@modal/firstVisit/ImportMnemonic.svelte'
-  import GenerateMnemonic from '@modal/firstVisit/GenerateMnemonic.svelte'
-  import VerifyMnemonic from '@modal/firstVisit/VerifyMnemonic.svelte'
-  import EncryptMnemonic from '@modal/firstVisit/EncryptMnemonic.svelte'
-  import FinishMsg from '@modal/firstVisit/FinishMsg.svelte'
 
   import { needsSetup } from '@util/helper.js'
+  import { onMount } from 'svelte'
 
   // setup steps for first visits/new devices
+  // string means it is dynamically loaded
   const setupSteps = [
     WelcomeDescription,
-    SetupMsg,
-    ImportMnemonic,
-    GenerateMnemonic,
-    VerifyMnemonic,
-    EncryptMnemonic,
-    FinishMsg,
+    'SetupMsg',
+    'ImportMnemonic',
+    'GenerateMnemonic',
+    'VerifyMnemonic',
+    'EncryptMnemonic',
+    'FinishMsg',
   ]
 
   const show = needsSetup()
+
+  onMount(async () => {
+    if(show !== true) return
+
+    // dynamically load future steps in order
+    setupSteps.forEach(async (x,i) => {
+      if (typeof x === 'string')
+        setupSteps[i] = (await import(`@modal/firstVisit/${x}.svelte`)).default
+    })
+
+  })
 </script>
 
-<NavModal title='test' bodies={setupSteps} {show}/>
+<NavModal title='Loading...' bodies={setupSteps} {show} />

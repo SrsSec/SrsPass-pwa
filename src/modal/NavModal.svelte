@@ -15,7 +15,10 @@
   }
 
   $: lockPrev = () => $childLockPrev || idx < 1
-  $: lockNext = () => $childLockNext || idx >= bodies.length - 1
+  $: lockNext = () => $childLockNext || idx >= bodies.length - 1 ||
+    typeof bodies[idx + 1] !== 'function'
+  // if other than function, it means it hasn't loaded yet or is invalid,
+  // which we lock in either case
 
   // add vim key nav
   function handleKeydown(evt) {
