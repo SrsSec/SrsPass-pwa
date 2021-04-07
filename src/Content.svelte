@@ -6,12 +6,17 @@
   let FirstVisitSetup
     , PassGenerator
 
-  onMount(async () => {
-    import('@component/PassGenerator.svelte')
-      .then(c => PassGenerator = c.default)
-    import('@component/Setup.svelte')
-      .then(c => FirstVisitSetup = c.default)
+  onMount(() => {
+    import(
+      /* webpackChunkName: "unlock" */
+      '@component/PassGenerator.svelte'
+    ).then(c => PassGenerator = c.default)
+    import(
+      /* webpackChunkName: "setup" */
+      '@component/Setup.svelte'
+    ).then(c => FirstVisitSetup = c.default)
   })
+
 </script>
 
 <Title />
