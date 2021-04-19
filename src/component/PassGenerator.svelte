@@ -1,4 +1,10 @@
 <script>
+
+// TODO divide this into Unlocker & Generator component for improved lazy loading
+// Unlocker can be painted right away... but can await lazy load of needed argon2
+// and any additional libs for Unlocker could maybe keep Unlocker from
+// being blocked too long
+
 import {
   afterUpdate
   , onMount
