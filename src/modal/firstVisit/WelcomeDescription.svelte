@@ -24,4 +24,4 @@ from just a single password.</p>
 <p>No more having to memorize multiple passwords.</p>
 <p>Being stateless, you no longer need to worry about managing files or vaults across devices.
 Even synchronize your passwords with offline devices!</p>
-<p>Find out more in the <a target="_blank" href="https://docs.srspass.com">documentation</a>. Next continues with setup.</p>
+<p>Find out more in the <a target="_blank" rel="noopener" href="https://docs.srspass.com">documentation</a>. Next continues with setup.</p>
