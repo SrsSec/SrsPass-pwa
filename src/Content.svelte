@@ -8,11 +8,17 @@
 
   onMount(() => {
     import(
-      /* webpackChunkName: "unlock" */
+      /*
+        webpackChunkName: "unlock",
+        webpackPreload: true
+      */
       '@component/PassGenerator.svelte'
     ).then(c => PassGenerator = c.default)
     import(
-      /* webpackChunkName: "setup" */
+      /*
+        webpackChunkName: "setup",
+        webpackPrefetch: true
+      */
       '@component/Setup.svelte'
     ).then(c => FirstVisitSetup = c.default)
   })
