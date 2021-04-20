@@ -8,7 +8,7 @@ const currentYear = new Date().getFullYear()
 </script>
 <footer>
   &copy; {currentYear} -
-  <a href="https://srssec.com"> SrsSec</a> -
-  <a href="https://docs.srspass.com"> docs</a> -
-  v{version}-<a href={"https://github.com/SrsSec/SrsPass-pwa/tree/" + commitHash}>{shortHash}</a>
+  <a href="https://srssec.com" rel="noopener"> SrsSec</a> -
+  <a href="https://docs.srspass.com" rel="noopener"> docs</a> -
+  v{version}-<a href={"https://github.com/SrsSec/SrsPass-pwa/tree/" + commitHash} rel="noopener">{shortHash}</a>
 </footer>
