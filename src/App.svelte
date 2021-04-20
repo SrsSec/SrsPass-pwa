@@ -1,5 +1,5 @@
 <script>
-import('@public/global.css')
+import '@public/global.css'
 import '@public/manifest.webmanifest'
 import Footer from '@component/Footer.svelte'
 import Content from '@/Content.svelte'
