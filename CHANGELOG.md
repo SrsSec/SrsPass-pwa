@@ -1,5 +1,19 @@
 # CHANGELOG
 
+### [0.2.6](https://github.com/SrsSec/SrsPass-pwa/compare/v0.2.5...v0.2.6) (2021-04-26)
+
+
+### Features
+
+* make initial components dynamic imports for lazy-load ([d841d30](https://github.com/SrsSec/SrsPass-pwa/commit/d841d3065852c0a07279fa672ef910bd7af16385))
+
+
+### Bug Fixes
+
+* improve link opening security ([4302368](https://github.com/SrsSec/SrsPass-pwa/commit/4302368da57a8dfcc08c28b767f19c34f8e67479))
+* improve link security for those in footer ([4a3d7c0](https://github.com/SrsSec/SrsPass-pwa/commit/4a3d7c0565a403b1bf7078b7f50492a95d4c2a10))
+* workbox console error output ([edbbf97](https://github.com/SrsSec/SrsPass-pwa/commit/edbbf975932b3af57e0e60d1b6e433fa403c18ea))
+
 ### [0.2.5](https://github.com/SrsSec/SrsPass-pwa/compare/v0.2.4...v0.2.5) (2021-04-01)
 
 
