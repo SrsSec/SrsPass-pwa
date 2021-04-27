@@ -81,10 +81,8 @@
   .modal-container {
     position: relative;
     background-color: #ffffff;
-    width: calc(100vw - 4em);
-    max-width: 44em;
-    margin: 1rem auto 0.2rem;
-    padding: 1rem;
+    max-width: min(50ch, 97%);
+    padding: 1.5rem;
     border-radius: 0.2em;
     box-shadow: 0 3px 10px #555;
     overflow-y: auto;
@@ -94,5 +92,11 @@
   }
   main {
     padding: 0rem 1rem 1rem 1rem;
+  }
+  @media screen and (max-width: 599px) {
+    .modal-container {
+      padding: 1.5rem 0;
+      margin: 4px auto;
+    }
   }
 </style>
