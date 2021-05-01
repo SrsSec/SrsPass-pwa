@@ -90,8 +90,14 @@ module.exports = {
     noParse: /\.wasm$/,
     rules: [
       {
+        test: /\.m?js$/,
+        include: /src/,
+        use: ['babel-loader'],
+      },
+      {
         test: /\.svelte$/,
-        use: {
+        include: /src/,
+        use: ['babel-loader', {
           loader: 'svelte-loader',
           options: {
             emitCss: true,
@@ -108,7 +114,7 @@ module.exports = {
               handleWarning(warning)
             }
           }
-        }
+        }]
       },
       {
         test: /\.css$/,

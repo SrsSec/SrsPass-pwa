@@ -18,6 +18,7 @@
   },
   "dependencies": {
     "argon2-browser": "^1.15.2",
+    "babel-loader": "^8.2.2",
     "base64-loader": "^1.0.0",
     "bip39": "^3.0.2",
     "bs58check": "^2.1.2",
