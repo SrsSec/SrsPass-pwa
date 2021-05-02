@@ -198,8 +198,8 @@ module.exports = {
       },
     }),
   ],
-  devtool: prod ? false : 'source-map',
-  optimization: {
+  devtool: prod ? false : 'eval-source-map',
+  optimization: !prod ? {} : {
     splitChunks: {
       chunks: 'all',
       maxSize: 400000,
