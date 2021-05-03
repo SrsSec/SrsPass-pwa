@@ -1,21 +1,10 @@
 <script>
 
-import { onMount, onDestroy } from 'svelte'
 import { appTerm, passTerm } from '@/constants.js'
-
-const DEBUG = process.env.NODE_ENV === 'development'
 
 export const parentModal = {
   title: `Welcome to ${appTerm}!`
 }
-
-onMount(() => {
-  // locks nav so users dont just skip without reading
-  if(!DEBUG) {
-    lockNav(true)
-    setTimeout(() => lockNav(false), 4000)
-  }
-})
 
 </script>
 
