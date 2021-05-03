@@ -3,20 +3,14 @@
   Finish setup msg
   delete mnemonic from store and session storage
    */
-  import { onMount, onDestroy } from 'svelte'
   import { mnemonic } from '@store/mnemonic.js'
   import { passTerm, passHtml, mnemonicTerm, mnemonicHtml, childPassesHtml } from '@/constants.js'
-  import { childTitle, lockNav } from '@store/firstVisitNav.js'
 
-  onMount(() => {
-    lockNav(true)
-    childTitle.set(`Setup is complete, hit finish to use the App!`)
-  })
+export const parentModal = {
+  title: `Setup is complete!`,
+  finishBtnLabel: 'Finish Setup'
+}
 
-  onDestroy(() => {
-    lockNav(false)
-    childTitle.set(null)
-  })
 </script>
 
 <p>You've successfully finished initial setup to get started with SrsPass.</p>

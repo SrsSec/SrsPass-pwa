@@ -2,8 +2,9 @@
   import Title from '@component/Title.svelte'
   import LoadingSpinner from '@component/LoadingSpinner.svelte'
   import { onMount } from 'svelte'
+  import { needsSetup } from '@util/helper.js'
 
-  let FirstVisitSetup
+  let Setup
     , PassGenerator
 
   onMount(() => {
@@ -14,19 +15,21 @@
       */
       '@component/PassGenerator.svelte'
     ).then(c => PassGenerator = c.default)
-    import(
-      /*
-        webpackChunkName: "setup",
-        webpackPrefetch: true
-      */
-      '@component/Setup.svelte'
-    ).then(c => FirstVisitSetup = c.default)
-  })
+    needsSetup() && import(
+        /*
+          webpackChunkName: "setup",
+          webpackPrefetch: true
+        */
+        '@component/setup/Root.svelte'
+      ).then(c => Setup = c.default)
+    })
 
 </script>
 
 <Title />
-<svelte:component this={FirstVisitSetup} />
+{#if needsSetup()}
+  <svelte:component this={Setup} />
+{/if}
 {#if PassGenerator}
   <svelte:component this={PassGenerator} />
 {:else}

@@ -14,7 +14,8 @@ import {
 const aesMode = 'aes-256-gcm'
 
 export const storageKeys = {
-  mnemonicSeed: 'seedBlob'
+  mnemonicSeed: 'seedBlob',
+  mnemonicPlain: 'plainBlob'
 }
 
 const encodeForStorage = obj =>
@@ -79,6 +80,24 @@ async function decryptMnemonicSeedBlob(pass, blob) {
   const key = await deriveSeedEncryptionKey(pass, salt, params)
   const payload = decryptAes(key, encrypted)
   return payload
+}
+
+// TODO standardize this encryption scheme... here and @ step 54
+async function encryptPlainMnemonic(pass, mnemonic) {
+  const salt = randomBytes(32)
+
+  const keyPromise = deriveSeedEncryptionKey(pass, salt)
+  const encrypted = {
+    v: 1, // versioning to support updates to container and handling thereof
+    key: {
+      salt,
+      params: a2params.heavy
+    },
+    // NOTE: this mechanism allows us to spawn 2 workers to run in parallel for KDF
+    ...encryptAes(await keyPromise, mnemonic)
+  }
+  const encryptedEncodedBlob = encodeForStorage(encrypted)
+  return encryptedEncodedBlob
 }
 
 // returns true on success

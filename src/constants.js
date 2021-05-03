@@ -38,3 +38,5 @@ Use the following definition list, to represent a certain character in the outpu
 Definitions
 
 `
+
+export const defaultSetupOption = 'full'

@@ -3,25 +3,37 @@
   consider zxcvbn but figure out way to bundle it nicely, or only load on firstVisit, maybe on verify phase?
 zxcvbn.js bundled and minified is about 400kB gzipped or 820kB uncompressed, most of which is dictionaries. Consider these tips if you're noticing page load latency on your site.
    */
+  // NOTE zxcvbn is likely too heavy... for intended purpose...
+  // However can consider adding it as optional dynaload... with option like check pasword strength
   import { onMount, onDestroy } from 'svelte'
   import { mnemonic, clearMnemonicInSession } from '@store/mnemonic.js'
   import { saveEncryptSeedFromMnemonic } from '@util/crypto/encryption.js'
   import { mnemonicTerm, passTerm, passHtml } from '@/constants.js'
-  import { childLockNext, childTitle, lockNav } from '@store/firstVisitNav.js'
   import { disableAnnoyingMobileInputBugs } from '@util/helper.js'
 
+  // TODO if full verification was NOT completed... save the plain mnemonic... ofc encrypted, in the browser
+  // to allow for viewing of the backup phrase at a later time, in case of quick setup flow
+  // or to give users who did full setup, but did SKIP on the verification, a chance to recover their backup phrase
+  // in case they did in fact write it down incorrectly or not at all. This is basically meant to lower user friction.
+
+  export const parentModal = {
+    title: `Enter your ${passTerm}`,
+    lockNext: true,
+    lockPrev: true,
+    focus: true
+  }
+
   onMount(() => {
-    lockNav(true)
-    childTitle.set(`Enter your ${passTerm}`)
     // NOTE: be sure to update this if unlock pass element tag is changed
     disableAnnoyingMobileInputBugs()
     passInputDOM = document.getElementById('encryptInputPass')
   })
 
   onDestroy(() => {
+    // little trick that may get GC to replace old pass instance in memory
+    const oldPassUserLen = passUser.length
     passUser = ''
-    lockNav(false)
-    childTitle.set(null)
+    passUser = '0'.repeat(oldPassUserLen)
   })
 
   // On confirm, the mnemonic is run through
@@ -58,7 +70,7 @@ zxcvbn.js bundled and minified is about 400kB gzipped or 820kB uncompressed, mos
     showPass = false,
     passInputDOM
 
-  $: encrypted ? childLockNext.set(false) : childLockNext.set(true)
+  $: encrypted ? parentModal.lockNext = false : parentModal.lockNext = true
   $: passInputDOM && (
     showPass ? passInputDOM.setAttribute('type', 'text') : passInputDOM.setAttribute('type', 'password'))
 </script>

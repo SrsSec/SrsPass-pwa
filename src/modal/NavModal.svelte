@@ -1,28 +1,20 @@
 <script>
   import { fade } from 'svelte/transition';
-  import {
-    childLockNext,
-    childLockPrev,
-    childFocus,
-    childTitle
-  } from '@store/firstVisitNav.js'
 
   let idx = 0
+
   // close is only enabled on last page
   function handleClose(e) {
     if (lastPage && 'close' in e.target.dataset)
       show = false
   }
 
-  $: lockPrev = () => $childLockPrev || idx < 1
-  $: lockNext = () => $childLockNext || idx >= bodies.length - 1 ||
-    typeof bodies[idx + 1] !== 'function'
-  // if other than function, it means it hasn't loaded yet or is invalid,
-  // which we lock in either case
+  $: lockPrev = () => childProps.lockPrev || idx < 1
+  $: lockNext = () => childProps.lockNext || idx >= bodies.length - 1 || !isNextReady
 
   // add vim key nav
   function handleKeydown(evt) {
-    if (!show || $childFocus) return
+    if (!show || childProps.focus) return
     const { key, keyCode } = evt
     if (!lockPrev() && (key === 'h' || keyCode === 72)) {
       evt.preventDefault()
@@ -37,25 +29,60 @@
   export let title
   , bodies = []
   , show = false
+  , childProps = {}
+
+  let loading = false
 
   $: lastPage = idx === bodies.length - 1
+  // if other than function, it means it hasn't loaded yet or is invalid,
+  // which we lock in either case
+  $: isReady = typeof bodies[idx] === 'function'
+  $: isNextReady = typeof bodies[idx + 1] === 'function'
+  // reset childProps when page changes
+  $: if (idx) {
+    childProps = {}
+  }
+  $: {
+    // we disable reactivity here until last loading request completed
+    if (!isLoadingChildren()) {
+      bodies.forEach(async (x,i,a) => {
+        // only lock loading if there are bodies to iterate, so that loading false path can be reached
+        if (i === 0)
+          loading = true
+        if (typeof x === 'string')
+          bodies[i] = (await import(`@modal/firstVisit/${x}.svelte`)).default
+        if (i === a.length - 1)
+          loading = false
+      })
+    }
+  }
+
+  const clearChildProps = () => childProps = {}
+  const isLoadingChildren = () => loading
 </script>
 
-<svelte:window autofocus on:keydown={handleKeydown}/>
+<svelte:window autofocus on:keydown={handleKeydown} />
 {#if show}
   <div>
     <div class="modal-overlay" data-close on:click={handleClose} transition:fade={{duration: 1500}}>
       <div class="modal-container center">
-        <h2>{$childTitle || title}</h2>
-        <main><svelte:component this={bodies[idx]} /></main>
-        {#if lastPage}
-          <div>
-            <button data-close on:click={handleClose}>Finish</button>
-          </div>
+        <h2>{childProps.title || title}</h2>
+        {#if isReady}
+          <main>
+            <svelte:component
+           this={bodies[idx]}
+           bind:parentModal={childProps}
+           />
+          </main>
+          {#if lastPage}
+            <div>
+              <button data-close on:click={handleClose}>{ childProps.finishBtnLabel || 'Finish' }</button>
+            </div>
+          {/if}
+          <button disabled={lockPrev()} on:click={() => idx -= 1}>Prev</button>
+          <span>{idx + 1}/{bodies.length}</span>
+          <button disabled={lockNext()} on:click={() => idx += 1}>Next</button>
         {/if}
-        <button disabled={lockPrev()} on:click={() => idx -= 1}>Prev</button>
-        <span>{idx + 1}/{bodies.length}</span>
-        <button disabled={lockNext()} on:click={() => idx += 1}>Next</button>
       </div>
     </div>
   </div>

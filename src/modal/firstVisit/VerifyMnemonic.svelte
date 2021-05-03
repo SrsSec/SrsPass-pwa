@@ -1,30 +1,19 @@
 <script>
-  import { onMount, onDestroy } from 'svelte'
+  import { onMount } from 'svelte'
   import { mnemonic } from '@store/mnemonic.js'
   import { validateMnemonic } from 'bip39'
   import { verifySuccess, verifySkip, mnemonicHtml, mnemonicTerm } from '@/constants.js'
-  import { childLockNext, childTitle, childFocus, lockNav } from '@store/firstVisitNav.js'
   import { disableAnnoyingMobileInputBugs } from '@util/helper.js'
 
-  // NOTE was used for verifying only 2 words during dev
-  // but skip keyword made its use obsolete
-  const DEBUG = process.env.NODE_ENV === 'development'
-
   // lock navigation on mount, and return a bound function which unlocks
-  // this returned function will be run onDestroy lifetime
-  // onMount(() => setNav(true) && setNav.bind(null, false))
+  export const parentModal = {
+    title: `Verify your ${mnemonicTerm}`,
+    lockNext: true,
+    focus: true
+  }
   onMount(() => {
-    childLockNext.set(true)
-    // needed here because autofocus doesn't trigger on:focus on the textarea
-    childFocus.set(true)
-    childTitle.set(`Verify your ${mnemonicTerm}`)
+    // TODO test if we can have this outside of onMount
     disableAnnoyingMobileInputBugs('TEXTAREA')
-  })
-
-  onDestroy(() => {
-    lockNav(false)
-    childFocus.set(false)
-    childTitle.set(null)
   })
 
   const mnemonicArray = $mnemonic.split(' ')
@@ -64,7 +53,7 @@
   // TODO add something to a logging store, to indicate user has done a skip
   $: if(wordUser === 'SKIP' && skippable) { verified = true; wordUser = verifySkip }
   $: verified = wordsRemaining <= 0
-  $: verified && childLockNext.set(false)
+  $: verified && (parentModal.lockNext = false)
   $: placeholder = verified ?
       verifySuccess :
       `Enter Word #${wordIdx + 1} then hit verify/enter!${skippable ? '\nType SKIP to end verification early...' : ''}`
@@ -83,7 +72,7 @@
 <textarea
   autofocus
   id="verifyInput"
-  on:focus={() => childFocus.set(true)} on:blur={() => { childFocus.set(false); handleVerify(); }} on:keydown={handleKeydown} disabled={verified} class:red-border="{wordUser.length > 0 && !isWordUserValid && !verified}" {placeholder} bind:value={wordUser}/>
+  on:focus={() => parentModal.focus = true} on:blur={() => { parentModal.focus = false; handleVerify(); }} on:keydown={handleKeydown} disabled={verified} class:red-border="{wordUser.length > 0 && !isWordUserValid && !verified}" {placeholder} bind:value={wordUser}/>
 <button id="verifyWord" disabled={verified || wordUser.length === 0} on:click={handleVerify}>
   Verify
 </button>
