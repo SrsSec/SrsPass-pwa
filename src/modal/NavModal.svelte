@@ -24,6 +24,12 @@
       evt.preventDefault()
       return idx++
     }
+    if (lastPage && (key === 'Enter' || [13, 32].indexOf(keyCode) >= 0)) {
+      evt.preventDefault()
+      const finishButtonDOM = document.getElementById('btn-finish')
+      finishButtonDOM.focus()
+      finishButtonDOM.click()
+    }
   }
 
   export let title
@@ -76,7 +82,7 @@
           </main>
           {#if lastPage}
             <div>
-              <button data-close on:click={handleClose}>{ childProps.finishBtnLabel || 'Finish' }</button>
+              <button id="btn-finish" data-close on:click={handleClose}>{ childProps.finishBtnLabel || 'Finish' }</button>
             </div>
           {/if}
           <button disabled={lockPrev()} on:click={() => idx -= 1}>Prev</button>
