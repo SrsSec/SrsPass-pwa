@@ -15,7 +15,6 @@
       'FinishMsg',
     ],
     'quick': [
-      //'HiddenGeneratMnemonic, maybe special EncryptMnemonic??',
       'EncryptMnemonic',
       'FinishMsg',
     ],
