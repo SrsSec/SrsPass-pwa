@@ -20,6 +20,7 @@
 
   let input = '',
     userMnemonic = ''
+
   $: userMnemonic = input.trim()
   $: isMnemonicUserValid = validateMnemonic(userMnemonic)
   $: imported = userMnemonic === $mnemonic
@@ -30,7 +31,7 @@
 Enter your {@html mnemonicHtml} in the textbox below and import it to continue.
 </p>
 <textarea on:focus={() => parentModal.focus = true} on:blur={() => parentModal.focus = false} class:red-border="{input.length > 0 && !isMnemonicUserValid}" placeholder="Enter your {mnemonicTerm} here..." bind:value={input}/>
-<button disabled={!isMnemonicUserValid} on:click={handleImport}>
+<button disabled={!isMnemonicUserValid || imported} on:click={handleImport}>
   Import
 </button>
 
