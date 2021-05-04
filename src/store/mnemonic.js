@@ -23,18 +23,6 @@ function storeMnemonicInSession(mnemonicString) {
       )
     )
   )
-  //bip39.mnemonicToMnemonic(mnemonicString).then(
-  //  buf => sessionStorage.setItem(bs58check.encode(buf))
-  //)
-  //sessionStorage.setItem(
-  //  mnemonicStoreKey,
-  //  bs58check.encode(
-  //    Buffer.from(
-  //      mnemonicString,
-  //      'ascii'
-  //    )
-  //  )
-  //)
   return true
 }
 
@@ -76,18 +64,38 @@ export function getSessionStoredMnemonic() {
 }
 
 function createMnemonic() {
-	const { subscribe, set } = writable(
+  const { subscribe, set } = writable(
     getSessionStoredMnemonic() ||
     generateNewMnemonicAndStore()
   )
+  // if we hit encrypt mnemonic step, and the mnemonic still needs full verification
+  // we use this store to signal that the mnemonic should be saved as well...
+  let verified = false
+    , skipped = false
 
-	return {
-		subscribe,
-		regenerate: () => set(generateNewMnemonicAndStore()),
-		overwrite: mnemonicUser => bip39.validateMnemonic(mnemonicUser) &&
-      storeMnemonicInSession(mnemonicUser) &&
-      set(mnemonicUser)
-	}
+  return {
+    subscribe,
+    regenerate: () => {
+      set(generateNewMnemonicAndStore())
+      verified = false
+      return true
+    },
+    overwrite: mnemonicUser => {
+      const validated = bip39.validateMnemonic(mnemonicUser) &&
+      storeMnemonicInSession(mnemonicUser)
+      if (validated) {
+        set(mnemonicUser)
+        return verified = true
+      }
+    },
+    isVerified: () => verified,
+    isSkipped: () => skipped,
+    verify: (v = true) => verified = v,
+    skip: (v = true) => {
+      skipped = v
+      verified = !skipped
+    }
+  }
 }
 
 export const mnemonic = createMnemonic()

@@ -39,10 +39,19 @@
       const verifyButtonDOM = document.getElementById('verifyWord')
       verifyButtonDOM.focus()
       verifyButtonDOM.click()
-      //handleVerify()
+      //handleVerify() // prolly commented out and replaced with above 2 lines
+      // for proper visual feedback, with the textbox actually turning red in case
+      // of wrong input iirc
     }
   }
 
+  const verifiedHook = () => {
+    if (!verified) return
+    parentModal.lockNext = false
+
+    if (!mnemonic.isSkipped())
+      mnemonic.verify()
+  }
 
   $: wordIdx = mixedArray[ctr]
   $: currentWord = mnemonicArray[wordIdx]
@@ -51,9 +60,16 @@
   $: wordsRemaining = mnemonicArray.length - ctr
   $: skippable = ctr >= minCtrToSkip
   // TODO add something to a logging store, to indicate user has done a skip
-  $: if(wordUser === 'SKIP' && skippable) { verified = true; wordUser = verifySkip }
+  // RESOLUTION the existence of mnemonicBlob should be sufficient and is the
+  // only pertinent side effect of a skip anyways... currently... or could log
+  // it, if implementing a logger store for users to help with future troubleshooting
+  $: if(wordUser === 'SKIP' && skippable) {
+    verified = true
+    mnemonic.skip()
+    wordUser = verifySkip
+  }
   $: verified = wordsRemaining <= 0
-  $: verified && (parentModal.lockNext = false)
+  $: verified && verifiedHook()
   $: placeholder = verified ?
       verifySuccess :
       `Enter Word #${wordIdx + 1} then hit verify/enter!${skippable ? '\nType SKIP to end verification early...' : ''}`
