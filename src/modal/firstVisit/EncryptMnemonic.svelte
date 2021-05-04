@@ -82,6 +82,8 @@ zxcvbn.js bundled and minified is about 400kB gzipped or 820kB uncompressed, mos
 <br/>
 <input id="encryptInputPass"
        autofocus
+       on:focus={() => parentModal.focus = true}
+       on:blur={() => parentModal.focus = false}
        disabled={encrypting || encrypted}
        type="text"
        required
