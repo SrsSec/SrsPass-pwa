@@ -20,7 +20,40 @@ $: parentModal.export.setupOption = setupOption
 // TODO remove this before production... or implement in constant.js
 const tt = `<sup>?</sup>`
 
+// add vim key nav
+function handleKeydown(evt) {
+  const { key } = evt
+
+  keyNavBlock: {
+    switch (key) {
+      case '1':
+      case 'f':
+      case 'F':
+        setupOption = 'full'
+        break
+      case '2':
+      case 'q':
+      case 'Q':
+        setupOption = 'quick'
+        break
+      case '3':
+      case 'e':
+      case 'E':
+        setupOption = 'existing'
+        break
+      default:
+        break keyNavBlock
+    }
+    // doesn't trigger on non-match, due to block break
+    evt.preventDefault()
+  }
+
+}
+
 </script>
+
+<svelte:window on:keydown={handleKeydown} />
+
 <p>Please select your setup option!</p>
 <div id="setup-radio-group">
   <input type="radio" id="radio1" bind:group={setupOption} value={'full'}><label for="radio1" title="Recommended setup for new users.">Full Setup{@html tt}</label>
