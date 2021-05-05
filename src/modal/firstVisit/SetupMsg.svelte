@@ -73,4 +73,25 @@ function handleKeydown(evt) {
     margin-left: 0.5em;
     margin-right: 1em;
   }
+  @media (pointer: coarse) {
+    [title] {
+      position: relative;
+      display: inline-flex;
+      justify-content: center;
+    }
+    [title]:hover::after {
+      position: absolute;
+      content: attr(title);
+      font-size: 0.8125rem;
+      top: 1rem;
+      left: 50%;
+      transform: translateX(-50%);
+      color: white;
+      background-color: #333;
+      border: 1px solid white;
+      width: 140%;
+      padding: 3px;
+      z-index: 9;
+    }
+  }
 </style>
