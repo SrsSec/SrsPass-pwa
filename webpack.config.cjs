@@ -117,14 +117,20 @@ module.exports = {
         }]
       },
       {
-        test: /\.css$/,
+        test: /\.css$/i,
         use: [
           /**
            * MiniCssExtractPlugin doesn't support HMR.
            * For developing, use 'style-loader' instead.
            * */
-          prod ? MiniCssExtractPlugin.loader : 'style-loader',
-          'css-loader'
+          prod ? MiniCssExtractPlugin.loader :
+          'style-loader',
+          {
+            loader: 'css-loader',
+            options: {
+              esModule: false
+            }
+          }
         ]
       },
       {
