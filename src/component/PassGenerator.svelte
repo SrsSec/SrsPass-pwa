@@ -10,7 +10,7 @@ import {
   , onMount
 } from 'svelte'
 import { deriveGeneratorPassword } from '@util/crypto/kdf'
-import { loadDecryptSeed } from '@util/crypto/encryption'
+import { loadDecryptSeed, isPlainMnemonicInStorage } from '@util/crypto/encryption'
 import * as c from '@/constants.js'
 import {
   needsSetup
@@ -25,6 +25,7 @@ import {
   dedupeChars,
   validatePassFormat,
 } from '@util/srsPass/charsetter'
+import Snackbar from '@component/Snackbar'
 
 const msg = {
   passInput: "Enter password here..."
@@ -242,6 +243,9 @@ $: uri = uri.trim()
       </button>
       {/if}
     </div>
+    {#if isPlainMnemonicInStorage()}
+      <Snackbar text={c.postVerifyAlert} />
+    {/if}
   {/if}
 </div>
 

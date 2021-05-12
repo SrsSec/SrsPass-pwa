@@ -123,3 +123,11 @@ export async function loadDecryptMnemonic(pass) {
   const blob = localStorage.getItem(storageKeys.mnemonicPlain)
   return decryptBlob(pass, blob)
 }
+
+export function clearPlainMnemonicFromStorage() {
+  localStorage.clear(storageKeys.mnemonicPlain)
+}
+
+export function isPlainMnemonicInStorage() {
+  return storageKeys.mnemonicPlain in localStorage
+}

@@ -40,3 +40,5 @@ Definitions
 `
 
 export const defaultSetupOption = 'full'
+
+export const postVerifyAlert = `Please remember to complete the verification step of your ${mnemonicHtml}!`
