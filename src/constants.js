@@ -14,7 +14,7 @@ export const passHtml = `<strong>${passTerm.toLowerCase()}</strong>`
 export const childPassTerm = 'Srs Password'
 export const childPassHtml = `<strong>${childPassTerm.toLowerCase()}</strong>`
 export const childPassesTerm = `${childPassTerm}s`
-export const childPassesHtml = `<strong>${childPassTerm.toLowerCase()}</strong>`
+export const childPassesHtml = `<strong>${childPassesTerm.toLowerCase()}</strong>`
 
 export const aesAlgo = 'aes-256-gcm'
 
