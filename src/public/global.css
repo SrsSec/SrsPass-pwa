@@ -60,6 +60,11 @@ button:focus {
 	border-color: #666;
 }
 
+/* Change mouse cursor to pointer over tooltips */
+[title],[title] > label,[title] > textarea {
+  cursor: pointer;
+}
+
 /* Title Mobile Tooltip Shim */
 @media (pointer: coarse) {
   [title] {
