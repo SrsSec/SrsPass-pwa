@@ -59,3 +59,58 @@ button:active {
 button:focus {
 	border-color: #666;
 }
+
+/* Title Mobile Tooltip Shim */
+@media (pointer: coarse) {
+  [title] {
+    position: relative;
+  }
+  @-webkit-keyframes fadeinout {
+    0%,100% { opacity: 0; visibility: hidden; }
+    10%,80% { opacity: 1; visibility: visible; }
+  }
+
+  @keyframes fadeinout {
+    0%,100% { opacity: 0; visibility: hidden; }
+    10%,80% { opacity: 1; visibility: visible; }
+  }
+  div[title]:hover::before {
+    margin-top: 3.75rem;
+  }
+  /* using fixed translateZ we achieve absolute like positioning
+   * by leaving out left/top etc, while escaping the size confines
+   * of the parent element */
+  [title]:hover::before {
+    position: fixed;
+    transform: translateZ(0);
+    margin-top: 1.6125rem;
+    margin-right: 0.375rem;
+    content: attr(title);
+    font-size: 0.8125rem;
+    color: white;
+    background-color: #333;
+    border: 1px solid white;
+    padding: 3px;
+    z-index: 9;
+    -webkit-animation: fadeinout 6s linear forwards;
+    animation: fadeinout 6s linear forwards;
+  }
+  /* Append ? tooltip indicator */
+  label[title]::after {
+    vertical-align: super;
+    font-size: smaller;
+    content: "?"
+  }
+
+  label[title]::after {
+    vertical-align: super;
+    font-size: smaller;
+    content: "?";
+  }
+
+  [title] > label::after {
+    vertical-align: super;
+    font-size: smaller;
+    content: "?";
+  }
+}

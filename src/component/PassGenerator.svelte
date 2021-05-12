@@ -174,10 +174,10 @@ $: uri = uri.trim()
     {#if unlocking}
       <p>Unlocking... please wait</p>
     {:else}
-      <div>
-        <label for="unlockPassInput" title={c.tipUnlockPass}>Please enter your {@html c.passHtml} to begin!</label>
-        <input autofocus={!needsSetup()} id="unlockPassInput" title={c.tipUnlockPass} name="unlockPassInput" type="password" bind:value={unlockPass} disabled={unlocking} on:keypress={handleUnlockEnter}>
-        <button title={c.tipUnlockPass} on:click={handleUnlockClick} disabled={unlocking}>
+      <div title={c.tipUnlockPass}>
+        <label for="unlockPassInput">Please enter your {@html c.passHtml} to begin!</label>
+        <input autofocus={!needsSetup()} id="unlockPassInput" name="unlockPassInput" type="password" bind:value={unlockPass} disabled={unlocking} on:keypress={handleUnlockEnter}>
+        <button on:click={handleUnlockClick} disabled={unlocking}>
           Unlock
         </button>
         <div class="checkbox">
