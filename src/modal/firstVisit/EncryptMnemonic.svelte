@@ -47,6 +47,8 @@ zxcvbn.js bundled and minified is about 400kB gzipped or 820kB uncompressed, mos
   async function handleConfirm() {
     encrypting = true
     try {
+      // let's first make sure we're working with clean storage
+      localStorage.clear()
       const encryptSeedProm = saveEncryptSeedFromMnemonic(passUser, $mnemonic)
       const encryptPlainProm = mnemonic.isVerified() ? null : saveEncryptMnemonic(passUser, $mnemonic)
       // in this manner we run all these processes in parallel, if sufficient cores available
