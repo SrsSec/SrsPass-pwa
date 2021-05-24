@@ -1,7 +1,6 @@
 <script>
   import { onMount } from 'svelte'
   import { mnemonic } from '@store/mnemonic.js'
-  import { validateMnemonic } from 'bip39'
   import { verifySuccess, verifySkip, mnemonicHtml, mnemonicTerm } from '@/constants.js'
   import { disableAnnoyingMobileInputBugs } from '@util/helper.js'
 
@@ -12,7 +11,6 @@
     focus: true
   }
   onMount(() => {
-    // TODO test if we can have this outside of onMount
     disableAnnoyingMobileInputBugs('TEXTAREA')
   })
 
