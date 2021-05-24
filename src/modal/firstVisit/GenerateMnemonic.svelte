@@ -25,7 +25,7 @@
 </p>
 
 <style>
-	textarea { width: 100%; height: auto; }
+  textarea { width: 100%; height: auto; }
   @media (max-width: 440px) {
     textarea { min-height: 6rem }
   }
