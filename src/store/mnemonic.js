@@ -11,7 +11,7 @@ import bs58check from 'bs58check'
 const mnemonicStoreKey = 'entropy'
   , mnemonicBits = 128
 
-function storeMnemonicInSession(mnemonicString) {
+export function storeMnemonicInSession(mnemonicString) {
   if (!bip39.validateMnemonic(mnemonicString))
     return false
   sessionStorage.setItem(

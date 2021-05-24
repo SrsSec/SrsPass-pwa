@@ -41,4 +41,19 @@ Definitions
 
 export const defaultSetupOption = 'full'
 
-export const postVerifyAlert = `Please remember to complete the verification step of your ${mnemonicHtml}!`
+export const menuAboutText = `
+An open-source password generator that gives users the ability to statelessly manage their passwords.
+
+Made possible by SrsSec
+
+Copyrights Denis Milicevic
+Served under AGPLv3
+`
+
+export const postVerifyName = 'Backup Phrase'
+// TODO make this bold text linked and click leading to docu page explaining backup phrase?
+export const postVerifyAlert = `Remember to store your ${mnemonicHtml}! It is needed to sync other devices. Click <b>${postVerifyName}</b> in the settings menu (top-right, 3 horizontal lines) to complete this final setup step!`
+
+export const mnemonicTextPlaceholder = `${mnemonicTerm} will display here.
+Click here to unblur them.
+Make sure to save these words!!!`

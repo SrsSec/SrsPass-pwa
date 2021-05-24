@@ -5,6 +5,10 @@ export const needsSetup = () => {
   return !localStorage.getItem(storageKeys.mnemonicSeed)
 }
 
+export const needsPostVerify = () => {
+  return localStorage.getItem(storageKeys.mnemonicPlain)
+}
+
 // they call em features, but seem more like bugs
 // would be nice to be able to limit to subset of DOM
 export const disableAnnoyingMobileInputBugs = (tags = ['TEXTAREA', 'INPUT']) => {

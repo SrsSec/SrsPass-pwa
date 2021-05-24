@@ -26,6 +26,7 @@ import {
   validatePassFormat,
 } from '@util/srsPass/charsetter'
 import Snackbar from '@component/Snackbar'
+import Menu from '@component/Menu'
 import { isAppUnlocked } from '@store/main'
 
 const msg = {
@@ -171,6 +172,7 @@ $: login = login.trim()
 $: uri = uri.trim()
 </script>
 
+<Menu />
 <div>
   {#if needsCredentials}
     <h3>Usable offline & as PWA for extra security</h3>
