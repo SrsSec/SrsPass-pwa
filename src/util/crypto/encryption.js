@@ -125,7 +125,7 @@ export async function loadDecryptMnemonic(pass) {
 }
 
 export function clearPlainMnemonicFromStorage() {
-  localStorage.clear(storageKeys.mnemonicPlain)
+  localStorage.removeItem(storageKeys.mnemonicPlain)
 }
 
 export function isPlainMnemonicInStorage() {
