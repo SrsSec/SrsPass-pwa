@@ -26,6 +26,7 @@ import {
   validatePassFormat,
 } from '@util/srsPass/charsetter'
 import Snackbar from '@component/Snackbar'
+import { isAppUnlocked } from '@store/main'
 
 const msg = {
   passInput: "Enter password here..."
@@ -148,6 +149,7 @@ const advInputsTrigger = () => advInputs = advInputs
 $: index, passLen, childPassFormat, customAlpha, advInputsTrigger()
 
 $: needsCredentials = isEmpty(pass) || isEmpty(salt)
+$: needsCredentials ? isAppUnlocked.set(false) : isAppUnlocked.set(true)
 $: index = Math.floor(index)
 $: passLen = Math.floor(passLen)
 $: customAlpha = dedupeChars(customAlpha)
@@ -264,9 +266,5 @@ $: uri = uri.trim()
   .checkbox input {
     width: auto;
     margin-left: 0.6rem;
-  }
-  .text-blur {
-    color: transparent;
-    text-shadow: rgba(0,0,0,0.8) 0 0 0.75rem;
   }
 </style>
