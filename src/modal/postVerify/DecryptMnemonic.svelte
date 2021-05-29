@@ -125,7 +125,7 @@
   textarea {
     margin-top: 2.25rem;
     width: 100%;
-    height: 4.375rem;
+    height: 4.5rem;
   }
   @media (max-width: 440px) {
     textarea { min-height: 6rem }
