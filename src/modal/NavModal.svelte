@@ -97,7 +97,7 @@
 <svelte:window on:keydown={handleKeydown} />
 {#if show}
   <div bind:this={modal}>
-    <div class="modal-overlay" data-close on:click={handleClose} transition:fade={{duration: 1500}}>
+    <div class="modal-overlay" data-close on:dblclick={handleClose} transition:fade={{duration: 1500}}>
       <div class="modal-container center">
         <h2>{childProps.title || title}</h2>
         {#if isReady}
