@@ -18,6 +18,8 @@
     mnemonic.overwrite(userMnemonic)
   }
 
+  const placeholder = `Enter your ${mnemonicTerm} here...`
+
   let input = '',
     userMnemonic = ''
 
@@ -30,16 +32,19 @@
 <p>
 Enter your {@html mnemonicHtml} in the textbox below and import it to continue.
 </p>
-<textarea on:focus={() => parentModal.focus = true} on:blur={() => parentModal.focus = false} class:red-border="{input.length > 0 && !isMnemonicUserValid}" placeholder="Enter your {mnemonicTerm} here..." bind:value={input}/>
+<textarea
+  class:red-border="{input.length > 0 && !isMnemonicUserValid && !parentModal.focus}"
+  {placeholder}
+  title={input.length > 0 ? placeholder : ''}
+  bind:value={input}
+  on:focus={() => parentModal.focus = true}
+  on:blur={() => parentModal.focus = false}
+  />
 <button disabled={!isMnemonicUserValid || imported} on:click={handleImport}>
   Import
 </button>
 
 <style>
-  .red-border {
-    border: 2px solid red;
-    border-radius: 4px;
-  }
   textarea {
     width: 100%;
     height: auto;

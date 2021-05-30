@@ -33,11 +33,15 @@
       decryptedMnemonic = decryptedMnemonic.toString('utf8')
       const valid = mnemonic.overwrite(decryptedMnemonic)
       if (!valid)
-        throw new Error('Decrypted failed to validate... got ' + decryptedMnemonic)
+        throw new Error('Decrypted mnemonic failed to validate... got ' + decryptedMnemonic)
       decrypted = true
     } catch(e) {
       console.error(e)
-      alert(`Encountered error during decryption step!\n\nError:\n${e.message}`)
+      // TODO look into something better to rely on than message
+      if (e.message === 'Unsupported state or unable to authenticate data')
+        alert(`Incorrect ${passTerm.toLowerCase()} entered...`)
+      else
+        alert(`Encountered error during decryption step!\n\nError:\n${e.message}`)
       decryptedMnemonic = ''
     }
     decrypting = false

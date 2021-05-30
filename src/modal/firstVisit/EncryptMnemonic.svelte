@@ -97,13 +97,22 @@ zxcvbn.js bundled and minified is about 400kB gzipped or 820kB uncompressed, mos
 <div class="checkbox">
   <label for=showPass><span>show password<input name="showPass" type="checkbox" bind:checked={showPass}></span></label>
 </div>
+
 <br/>
-<button disabled={encrypting || encrypted} on:click={handleConfirm}>
+
+{#if !encrypted}
+  <button disabled={encrypting || encrypted} on:click={handleConfirm}>
   Confirm
 </button>
+{:else}
+  <div>
+    <em>Hit Next to continue!</em>
+  </div>
+{/if}
+
 {#if encrypting}
   <div>
-    Encrypting, please wait...
+    <strong>Encrypting</strong>, please wait...
   </div>
 {/if}
 

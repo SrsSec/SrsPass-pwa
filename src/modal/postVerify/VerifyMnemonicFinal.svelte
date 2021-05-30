@@ -70,16 +70,20 @@
 <textarea
   autofocus
   id="verifyInput"
-  on:focus={() => parentModal.focus = true} on:blur={() => { parentModal.focus = false; handleVerify(); }} on:keydown={handleKeydown} disabled={verified} class:red-border="{wordUser.length > 0 && !isWordUserValid && !verified}" {placeholder} bind:value={wordUser}/>
+  on:keydown={handleKeydown}
+  disabled={verified}
+  class:red-border="{wordUser.length > 0 && !isWordUserValid && !verified && !parentModal.focus}"
+  {placeholder}
+  title={wordUser.length > 0 ? placeholder : ''}
+  bind:value={wordUser}
+  on:focus={() => parentModal.focus = true}
+  on:blur={() => { parentModal.focus = false; handleVerify(); }}
+  />
 <button id="verifyWord" disabled={verified || wordUser.length === 0} on:click={handleVerify}>
   Verify
 </button>
 
 <style>
-  .red-border {
-    border: 2px solid red !important;
-    border-radius: 4px;
-  }
   textarea {
     width: 100%;
     height: auto;

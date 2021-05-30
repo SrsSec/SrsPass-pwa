@@ -124,3 +124,8 @@ button:focus {
   color: transparent;
   text-shadow: rgba(0,0,0,0.8) 0 0 0.75rem;
 }
+
+.red-border {
+  border: 1px solid transparent;
+  box-shadow: 0 0 0 2px red;
+}
