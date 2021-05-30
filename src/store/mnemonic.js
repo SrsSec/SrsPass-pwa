@@ -26,7 +26,7 @@ function storeMnemonicInSession(mnemonicString) {
   return true
 }
 
-export function clearMnemonicInSession() {
+function rmMnemonicSessionKey() {
   sessionStorage.removeItem(mnemonicStoreKey)
   return true
 }
@@ -37,7 +37,7 @@ function generateNewMnemonicAndStore() {
   return mnemonicNew
 }
 
-export function getSessionStoredMnemonic() {
+function getSessionStoredMnemonic() {
   try {
     const mnemonicStore = sessionStorage.getItem(mnemonicStoreKey)
     if (mnemonicStore === null) return
@@ -74,27 +74,32 @@ function createMnemonic() {
     , skipped = false
 
   return {
-    subscribe,
     regenerate: () => {
       set(generateNewMnemonicAndStore())
       verified = false
       return true
     },
     overwrite: mnemonicUser => {
+      if (mnemonicUser === null) {
+        rmMnemonicSessionKey() && set('')
+        return true
+      }
+
       const validated = bip39.validateMnemonic(mnemonicUser) &&
-      storeMnemonicInSession(mnemonicUser)
+        storeMnemonicInSession(mnemonicUser)
       if (validated) {
         set(mnemonicUser)
         return verified = true
       }
     },
-    isVerified: () => verified,
-    isSkipped: () => skipped,
     verify: (v = true) => verified = v,
     skip: (v = true) => {
       skipped = v
       verified = !skipped
-    }
+    },
+    subscribe,
+    isVerified: () => verified,
+    isSkipped: () => skipped,
   }
 }
 
@@ -104,7 +109,12 @@ export const readableMnemonic = (() => {
   const {
     regenerate,
     overwrite,
+    verify,
+    skip,
     ...readableMnemonic
   } = mnemonic
   return readableMnemonic
 })()
+
+export const clearMnemonic = () =>
+  mnemonic.overwrite(null)

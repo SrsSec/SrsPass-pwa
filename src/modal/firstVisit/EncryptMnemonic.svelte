@@ -6,7 +6,7 @@ zxcvbn.js bundled and minified is about 400kB gzipped or 820kB uncompressed, mos
   // NOTE zxcvbn is likely too heavy... for intended purpose...
   // However can consider adding it as optional dynaload... with option like check pasword strength
   import { onMount, onDestroy } from 'svelte'
-  import { mnemonic, clearMnemonicInSession } from '@store/mnemonic.js'
+  import { mnemonic, clearMnemonic } from '@store/mnemonic.js'
   import { saveEncryptSeedFromMnemonic, saveEncryptMnemonic } from '@util/crypto/encryption.js'
   import { mnemonicTerm, passTerm, passHtml } from '@/constants.js'
   import { disableAnnoyingMobileInputBugs } from '@util/helper.js'
@@ -53,7 +53,7 @@ zxcvbn.js bundled and minified is about 400kB gzipped or 820kB uncompressed, mos
       const encryptPlainProm = mnemonic.isVerified() ? null : saveEncryptMnemonic(passUser, $mnemonic)
       // in this manner we run all these processes in parallel, if sufficient cores available
       ;[encrypted] = await Promise.all([encryptSeedProm, encryptPlainProm])
-      clearMnemonicInSession()
+      clearMnemonic()
     } catch(e) {
       console.error(e)
       alert(`Encountered error during encryption step!\n\nError:\n${e.message}`)

@@ -2,7 +2,7 @@
 
 import { onMount } from 'svelte'
 import * as c from '@/constants.js'
-import { clearMnemonicInSession } from '@store/mnemonic'
+import { clearMnemonic } from '@store/mnemonic'
 import { clearPlainMnemonicFromStorage } from '@util/crypto/encryption'
 
 export const parentModal = {
@@ -11,7 +11,7 @@ export const parentModal = {
 }
 
 onMount(()=>{
-  clearMnemonicInSession()
+  clearMnemonic()
   clearPlainMnemonicFromStorage()
 })
 
