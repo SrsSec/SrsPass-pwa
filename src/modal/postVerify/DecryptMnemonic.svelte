@@ -1,19 +1,6 @@
 <script>
-  // based off EncryptMnemonic component
-
-  // will need a load function here from mnemonic file, which then loads the mnemonic into session storage
-
-
-  // title
-  // enter your unlock pass
-  // input box
-
-  // option to show mnemonic
-  //
-  // textarea if option ticked with mnemonic
-  //
   import { onMount, onDestroy } from 'svelte'
-  import { storeMnemonicInSession } from '@store/mnemonic.js'
+  import { mnemonic } from '@store/mnemonic.js'
   import { loadDecryptMnemonic } from '@util/crypto/encryption.js'
   import { passTerm } from '@/constants.js'
   import { disableAnnoyingMobileInputBugs } from '@util/helper.js'
@@ -41,17 +28,17 @@
   async function handleConfirm() {
     decrypting = true
     try {
-      mnemonic = await loadDecryptMnemonic(passUser)
+      decryptedMnemonic = await loadDecryptMnemonic(passUser)
       // above gives us u8 array... convert to utf8 to futureproof locales
-      mnemonic = mnemonic.toString('utf8')
-      const valid = storeMnemonicInSession(mnemonic)
+      decryptedMnemonic = decryptedMnemonic.toString('utf8')
+      const valid = mnemonic.overwrite(decryptedMnemonic)
       if (!valid)
-        throw new Error('Decrypted mnemonic failed to validate... got ' + mnemonic)
+        throw new Error('Decrypted failed to validate... got ' + decryptedMnemonic)
       decrypted = true
     } catch(e) {
       console.error(e)
       alert(`Encountered error during decryption step!\n\nError:\n${e.message}`)
-      mnemonic = ''
+      decryptedMnemonic = ''
     }
     decrypting = false
   }
@@ -69,7 +56,7 @@
     decrypted = false,
     showPass = false,
     showMnemonic = false,
-    mnemonic = '',
+    decryptedMnemonic = '',
     passInputDOM
 
   $: decrypted ? parentModal.lockNext = false : parentModal.lockNext = true
@@ -103,9 +90,9 @@
 {/if}
 <div on:click={() => showMnemonic = !showMnemonic}>
   <textarea
-    class="{ mnemonic.length > 0 && !showMnemonic ? 'text-blur' : ''}"
-    placeholder={c.mnemonicTextPlaceholder}
-    bind:value={mnemonic}
+    class="{ decryptedMnemonic.length > 0 && !showMnemonic ? 'text-blur' : ''}"
+    placeholder={c.decryptMnemonicTextPlaceholder}
+    bind:value={decryptedMnemonic}
     disabled
   />
 </div>
@@ -125,7 +112,7 @@
   textarea {
     margin-top: 2.25rem;
     width: 100%;
-    height: 4.5rem;
+    height: 5rem;
   }
   @media (max-width: 440px) {
     textarea { min-height: 6rem }
