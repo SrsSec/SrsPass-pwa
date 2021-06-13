@@ -1,8 +1,8 @@
 {
-  "name": "SrsPass - Password Generator & Manager Experimental Preview",
+  "name": "SrsPass - Password Generator & Manager",
   "short_name": "SrsPass",
-  "description": "A deterministic yet cryptographically secure stateless password generator",
-  "categories": ["password", "security", "generator", "manager", "secure"],
+  "description": "A deterministic & cryptographically secure password generator, providing stateless password management",
+  "categories": ["password", "security", "generator", "manager", "secure", "AES", "argon2"],
   "lang": "en-US",
   "start_url": "/index.html",
   "display": "standalone",
