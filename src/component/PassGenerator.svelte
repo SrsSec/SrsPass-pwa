@@ -238,7 +238,7 @@ $: uri = uri.trim()
           style="width:100%;"
           placeholder="Copy me after generating!"
           bind:value={childPass}
-          disabled
+          readonly
         />
       </div>
       {#if navigator.clipboard}

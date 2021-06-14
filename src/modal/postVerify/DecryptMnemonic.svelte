@@ -97,7 +97,7 @@
     class="{ decryptedMnemonic.length > 0 && !showMnemonic ? 'text-blur' : ''}"
     placeholder={c.decryptMnemonicTextPlaceholder}
     bind:value={decryptedMnemonic}
-    disabled
+    readonly
   />
 </div>
 
