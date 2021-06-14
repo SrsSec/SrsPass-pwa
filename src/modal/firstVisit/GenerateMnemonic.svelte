@@ -13,14 +13,14 @@
 </script>
 
 <p>
-  Here is your 12-word {@html mnemonicHtml}... it will be saved in this browser, but you'll need a copy for other devices or if your browser cache is deleted.
+  Here is your 12-word {@html mnemonicHtml}... copy this somewhere safe for future use, it is not stored by the app, and is as important as your password.
 </p>
 <textarea autocorrect="off" readonly>{$mnemonic}</textarea>
 <button on:click={handleRegen}>
   Change Phrase
 </button>
 <p>
-  The next dialog will verify that you have backed up your {@html mnemonicHtml} correctly!
+  The next dialog will verify that you have copied your {@html mnemonicHtml} correctly!
   The order of the words is important!
 </p>
 

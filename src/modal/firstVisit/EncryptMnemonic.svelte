@@ -75,7 +75,7 @@ zxcvbn.js bundled and minified is about 400kB gzipped or 820kB uncompressed, mos
     showPass ? passInputDOM.setAttribute('type', 'text') : passInputDOM.setAttribute('type', 'password'))
 </script>
 
-<p>Please create your own {@html passHtml}.</p>
+<p>Please type your desired {@html passHtml}.</p>
 <p>You will need it to unlock the interface whenever you use this app, so this should be memorizable, and is the only password you have to remember.</p>
 <!--><textarea class:red-border="{mnemonicUser.length > 0 && !isMnemonicUserValid}" placeholder="Enter your {passTerm} here..." bind:value={mnemonicUser}/><-->
 <br/>
