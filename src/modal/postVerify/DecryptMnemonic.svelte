@@ -92,7 +92,10 @@
     Checking, please wait...
   </div>
 {/if}
-<div on:click={() => showMnemonic = !showMnemonic}>
+<div
+  title="Make sure to store this somewhere secure"
+  on:click={() => showMnemonic = !showMnemonic}
+  >
   <textarea
     class="{ decryptedMnemonic.length > 0 && !showMnemonic ? 'text-blur' : ''}"
     placeholder={c.decryptMnemonicTextPlaceholder}
