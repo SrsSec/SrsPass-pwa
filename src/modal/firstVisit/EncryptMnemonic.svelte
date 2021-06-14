@@ -11,11 +11,6 @@ zxcvbn.js bundled and minified is about 400kB gzipped or 820kB uncompressed, mos
   import { mnemonicTerm, passTerm, passHtml } from '@/constants.js'
   import { disableAnnoyingMobileInputBugs } from '@util/helper.js'
 
-  // TODO if full verification was NOT completed... save the plain mnemonic... ofc encrypted, in the browser
-  // to allow for viewing of the backup phrase at a later time, in case of quick setup flow
-  // or to give users who did full setup, but did SKIP on the verification, a chance to recover their backup phrase
-  // in case they did in fact write it down incorrectly or not at all. This is basically meant to lower user friction.
-
   export const parentModal = {
     title: `Enter your ${passTerm}`,
     lockNext: true,

@@ -1,6 +1,4 @@
 <script>
-  //TODO fix border change artifact when word is incorrect -> correct
-  // maybe with variable padding
   import { onMount } from 'svelte'
   import { mnemonic } from '@store/mnemonic.js'
   import { verifySuccess, mnemonicHtml, mnemonicTerm } from '@/constants.js'

@@ -5,7 +5,7 @@ import bs58check from 'bs58check'
 // by default we generate a 128-bit mnemonic, however, power users are free to override this with 128-256 bit bip39 mnemonics via overwrite. The overwrite only checks that the mnemonic's mnemonic passes validation, not its size.
 
 // TODO consider if there's any benefits to bs58checking this?
-// TODO encrypt this...
+// TODO encrypt this... - probably unnecessary but consider thoroughly
 // TODO once encrypted, might be better to just "drop" this session
 // storage stuff
 const mnemonicStoreKey = 'entropy'

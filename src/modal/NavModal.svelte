@@ -67,14 +67,6 @@
   // which we lock in either case
   $: isReady = typeof bodies[idx] === 'function'
   $: isNextReady = typeof bodies[idx + 1] === 'function'
-  /* NOTE Unneeded and can cause bugs
-
-  // reset childProps when page changes
-  $: if (idx) {
-    childProps = {}
-  }
-  // TODO delete this NOTE after commit
-  */
   $: {
     // we disable reactivity here until last loading request completed
     if (!isLoadingChildren()) {
