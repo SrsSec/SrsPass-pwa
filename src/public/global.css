@@ -97,8 +97,8 @@ button:focus {
     border: 1px solid white;
     padding: 3px;
     z-index: 9;
-    -webkit-animation: fadeinout 6s linear forwards;
-    animation: fadeinout 6s linear forwards;
+    -webkit-animation: fadeinout 15s linear forwards;
+    animation: fadeinout 15s linear forwards;
   }
   /* Append ? tooltip indicator */
   label[title]::after {
