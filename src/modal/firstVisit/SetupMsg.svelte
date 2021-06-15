@@ -57,8 +57,8 @@ function handleKeydown(evt) {
 <div class="setup-radio-line"><input type="radio" id="radio3" bind:group={setupOption} value={'existing'}><label class="tooltip-flag" for="radio3" title="For existing users that have a {mnemonicTerm} to import. &#013;{mnemonicTerm}s are crypto BIP39 12/18/24 mnemonics, new users with crypto wallets could use this step also.">Existing User</label></div>
 {#if window.matchMedia('(pointer:fine)').matches}
   <p>Some text has tooltips, like the setup options above! Mouse over them to show tooltips.</p>
-{:else if window.matchMedia('(pointer:fine)').matches}
-  <p>Click on text with a <sup>?</sup> at the end to get tooltips, like the setup options above!</p>
+{:else if window.matchMedia('(pointer:coarse)').matches}
+  <p>Click on text with a <sup>?</sup> to get tooltips. Try with the setup options above!</p>
 {:else}
   <p>Hover or click over the above setup options to see tooltips explaining them!</p>
 {/if}
