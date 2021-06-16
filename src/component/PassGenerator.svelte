@@ -180,7 +180,7 @@ $: uri = uri.trim()
       <p>Unlocking... please wait</p>
     {:else}
       <div title={c.tipUnlockPass}>
-        <label for="unlockPassInput">Please enter your {@html c.passHtml} to begin!</label>
+        <label for="n/a-for-tooltip">Enter your {@html c.passHtml}</label>
         <input autofocus={!needsSetup()} id="unlockPassInput" name="unlockPassInput" type="password" bind:value={unlockPass} disabled={unlocking} on:keypress={handleUnlockEnter}>
         <button on:click={handleUnlockClick} disabled={unlocking}>
           Unlock
@@ -216,7 +216,7 @@ $: uri = uri.trim()
         <input name="passLenInput" type="number" min="4" steps="1" bind:value={passLen} on:keydown={blacklistDecimal} />
       </div>
       <br/>
-      <div class="input-container" spellcheck="false" title={c.tipPassFormat+`${charsetDefinitions}`}>
+      <div class="input-container tooltip-break-anywhere" spellcheck="false" title={c.tipPassFormat+`${charsetDefinitions}`}>
         <label for="childPassFormat">{c.childPassTerm.toLowerCase()} format</label>
         <input name="childPassFormat" type="text" bind:value={childPassFormat} on:keypress={handlePassFormatInput}>
       </div>
@@ -228,11 +228,11 @@ $: uri = uri.trim()
     {/if}
     <br/>
     <br/>
-    <div>
+    <div style="margin-bottom: 2rem;">
       <button on:click={handleGenerateClick}>
         generate {@html c.childPassHtml}
       </button>
-      <div class="input-container" title={c.tipChildPass} on:click={() => showChildPass = !showChildPass}>
+      <div class="input-container tooltip-on-focus" title={c.tipChildPass} on:click={() => showChildPass = !showChildPass}>
         <textarea
           class="{ childPass.length > 0 && !showChildPass ? 'text-blur' : ''}"
           style="width:100%;"

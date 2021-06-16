@@ -70,36 +70,59 @@ button:focus {
   [title] {
     position: relative;
   }
-  @-webkit-keyframes fadeinout {
-    0%,100% { opacity: 0; visibility: hidden; }
-    10%,80% { opacity: 1; visibility: visible; }
-  }
-
-  @keyframes fadeinout {
-    0%,100% { opacity: 0; visibility: hidden; }
-    10%,80% { opacity: 1; visibility: visible; }
-  }
-  div[title]:hover::before {
+  div[title]::before {
     margin-top: 3.75rem;
   }
-  /* using fixed translateZ we achieve absolute like positioning
-   * by leaving out left/top etc, while escaping the size confines
-   * of the parent element */
-  [title]:hover::before {
-    position: fixed;
-    transform: translateZ(0);
+  [title]::before {
+    position: absolute;
     margin-top: 1.6125rem;
     margin-right: 0.375rem;
     content: attr(title);
     font-size: 0.8125rem;
+    font-weight: 300;
     color: white;
     background-color: #333;
     border: 1px solid white;
     padding: 3px;
     z-index: 9;
-    -webkit-animation: fadeinout 15s linear forwards;
-    animation: fadeinout 15s linear forwards;
+    opacity: 0;
+    transition: visibility 1s, opacity 1s, content 1s;
+    visibility: hidden;
+    overflow: hidden;
+    max-width: 87vw;
+    white-space: pre-wrap;
   }
+
+  .tooltip-break-anywhere[title]::before {
+    line-break: anywhere;
+  }
+
+  /* currently a special exception for better layout in setup choices */
+  .offset-tip[title]::before {
+    min-width: 55vw;
+    left: -16vw;
+  }
+
+  [title]:hover::before {
+    visibility: visible;
+    opacity: 1;
+  }
+
+  .tooltip-on-focus[title]:focus-within::before {
+    visibility: visible;
+    opacity: 1;
+  }
+
+  [title]:focus-within::before {
+    visibility: hidden;
+    opacity: 0;
+  }
+
+  .tooltip-on-focus[title]:not(:focus-within)::before {
+    visibility: hidden;
+    opacity: 0;
+  }
+
   /* Append ? tooltip indicator */
   label[title]::after {
     vertical-align: super;

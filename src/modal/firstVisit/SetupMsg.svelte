@@ -52,9 +52,9 @@ function handleKeydown(evt) {
 <svelte:window on:keydown={handleKeydown} />
 
 <p>Please select your setup option!</p>
-<div class="setup-radio-line"><input type="radio" id="radio1" bind:group={setupOption} value={'full'}><label for="radio1" title="Recommended setup for new users.">Full Setup</label></div>
-<div class="setup-radio-line"><input type="radio" id="radio2" bind:group={setupOption} value={'quick'}><label for="radio2" title="Minimal setup prompts to get new users quickly on SrsPass.">Quick Setup</label></div>
-<div class="setup-radio-line"><input type="radio" id="radio3" bind:group={setupOption} value={'existing'}><label class="tooltip-flag" for="radio3" title="For existing users that have a {mnemonicTerm} to import. &#013;{mnemonicTerm}s are crypto BIP39 12/18/24 mnemonics, new users with crypto wallets could use this step also.">Existing User</label></div>
+<div class="setup-radio-line"><input type="radio" id="radio1" bind:group={setupOption} value={'full'}><label class="offset-tip" for="radio1" title="Recommended setup for new users.">Full Setup</label></div>
+<div class="setup-radio-line"><input type="radio" id="radio2" bind:group={setupOption} value={'quick'}><label class="offset-tip" for="radio2" title="Minimal setup prompts to get new users quickly on SrsPass.">Quick Setup</label></div>
+<div class="setup-radio-line"><input type="radio" id="radio3" bind:group={setupOption} value={'existing'}><label class="offset-tip" for="radio3" title="For existing users that have a {mnemonicTerm} to import. &#013;{mnemonicTerm}s are crypto BIP39 12/18/24 mnemonics, new users with crypto wallets could use this step also.">Existing User</label></div>
 {#if window.matchMedia('(pointer:fine)').matches}
   <p>Some text has tooltips, like the setup options above! Mouse over them to show tooltips.</p>
 {:else if window.matchMedia('(pointer:coarse)').matches}

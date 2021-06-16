@@ -18,8 +18,8 @@ export const childPassesHtml = `<strong>${childPassesTerm.toLowerCase()}</strong
 
 export const aesAlgo = 'aes-256-gcm'
 
-export const tipChildPass = 'This contains the child password to use as the password for the above login/uri combo. ' +
-  `It is generated using your credentials from the setup step and is reproducible on other devices with those same parameters.`
+export const tipChildPass = 'This is the generated password you should use for the above login/uri combo. ' +
+  `It derives from your setup credentials and is reproducible on other devices with these same parameters.`
 // export const tipChildPass = 'This contains the child password you should enter as the password for the above login/uri combo. ' +
 //   `It is derived by mashing your memory-hard hashes of your ${mnemonicTerm} and ${passTerm} with the login/uri combo and options ` +
 //   `through another round of the argon2id KDF, to receive the desired set of cryptographically random bytes to derive a deterministic ` +
@@ -29,14 +29,9 @@ export const tipUri = 'Enter the URI (Uniform Resource Identifier) of the resour
 export const tipIndex = `You would increment the index by 1, any time you may need to update the ${childPassTerm} for a site, either due to ` +
   `a site requiring periodic password updates or it being compromised. By incrementing, a completely different password will be generated.`
 export const tipPassLen = `Request a specific character length for your ${childPassTerm}, to suit your needs or conform to peculiar website requirements`
-export const tipUnlockPass = `This is the password you created at the end of initial setup. It is used to decrypt things like your backup phrase and derive your ${childPassTerm}s.`
-export const tipCustomAlpha = `Define your own custom alphabet, usable as the 'c' character in the ${childPassTerm} format input.`
-export const tipPassFormat = `Set a specific output format for this generated ${childPassTerm}. If the requested password length, exceeds that of the requested format, the last alphabet definition will be used for the excess.
-
-Use the following definition list, to represent a certain character in the output.
-
-Definitions
-
+export const tipUnlockPass = `This is the password you created at the end of initial setup. It is used to decrypt things like your backup seed and derive your ${childPassTerm}s.`
+export const tipCustomAlpha = `Define your own custom alphabet, usable as the 'c' format key in the ${childPassTerm} format input.`
+export const tipPassFormat = `Set a specific character output format for this generated ${childPassTerm}. The following built-ins are available, in 'key: value' format
 `
 
 export const defaultSetupOption = 'full'
