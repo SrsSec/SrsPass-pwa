@@ -175,7 +175,8 @@ $: uri = uri.trim()
 <Menu />
 <div>
   {#if needsCredentials}
-    <h3>Usable offline & as PWA for extra security</h3>
+    <!--TODO consider making this some rotating tips/taglines -->
+    <h3>Seriously secures all your accounts with unbreakable Srs Passwords!</h3>
     {#if unlocking}
       <p>Unlocking... please wait</p>
     {:else}
@@ -191,7 +192,6 @@ $: uri = uri.trim()
       </div>
     {/if}
   {:else}
-    <p>Note: All inputs are cAsE sensitive!</p>
     <br/>
     <div class="input-container" title={c.tipLogin}>
       <label for="loginInput">login</label>

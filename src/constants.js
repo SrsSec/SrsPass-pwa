@@ -24,7 +24,9 @@ export const tipChildPass = 'This is the generated password you should use for t
 //   `It is derived by mashing your memory-hard hashes of your ${mnemonicTerm} and ${passTerm} with the login/uri combo and options ` +
 //   `through another round of the argon2id KDF, to receive the desired set of cryptographically random bytes to derive a deterministic ` +
 //   `yet random password`
-export const tipLogin = 'Enter the login details here. Using either your "e-mail" or "username", or better yet, both in the form of "e-mail/username" is recommended'
+export const tipLogin = `Enter the login details here. Using either your "e-mail" or "username", or better yet, both in the form of "e-mail/username" is recommended
+
+Note: All inputs are cAsE sensitive!`
 export const tipUri = 'Enter the URI (Uniform Resource Identifier) of the resource you are looking to create a password for. In most cases, this can be a website name, in the form of "domainname.com".'
 export const tipIndex = `You would increment the index by 1, any time you may need to update the ${childPassTerm} for a site, either due to ` +
   `a site requiring periodic password updates or it being compromised. By incrementing, a completely different password will be generated.`
@@ -38,6 +40,8 @@ export const defaultSetupOption = 'full'
 
 export const menuAboutText = `
 An open-source password generator that gives users the ability to statelessly manage their passwords.
+
+This is an installable web app or PWA. Most modern browsers allow you to install it, via a prompt such as "Add to Homescreen" on mobile, or an install icon in the address bar! It is recommended you run it like that for best security!
 
 Made possible by SrsSec
 
