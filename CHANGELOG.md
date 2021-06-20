@@ -1,5 +1,45 @@
 # CHANGELOG
 
+## [0.3.0](https://github.com/SrsSec/SrsPass-pwa/compare/v0.2.6...v0.3.0) (2021-06-20)
+
+
+### ⚠ BREAKING CHANGES
+
+* pre-release multiple setup flows
+
+### Features
+
+* add enter handler for finish button in nav ([1240a42](https://github.com/SrsSec/SrsPass-pwa/commit/1240a4250660fb370efd4b8b7a0094dc15b98b17))
+* add improved mobile tooltips globally ([cf0b165](https://github.com/SrsSec/SrsPass-pwa/commit/cf0b1659446d85aae78ee8a28c813c865124933b))
+* add keynav selection to setup option ([ce26c00](https://github.com/SrsSec/SrsPass-pwa/commit/ce26c009f34068ed0d08958b333d2078647c4bf0))
+* add menu & post verify BP ([949d971](https://github.com/SrsSec/SrsPass-pwa/commit/949d971eed786370402ad5440d2dd26aeb278488))
+* add preliminary mobile tooltip support ([7215099](https://github.com/SrsSec/SrsPass-pwa/commit/7215099de01ec78933d7ed87295cc33eb901d5dd))
+* add ptr cursor tooltip indicator for non-mobile ([82fd28f](https://github.com/SrsSec/SrsPass-pwa/commit/82fd28fa21dfce27e86cb0fff74028cd03964dbb))
+* add snackbar alert for post verify of backup phrase ([08b3b8c](https://github.com/SrsSec/SrsPass-pwa/commit/08b3b8c6477ab974d706981185f7e0d50893fbbb))
+* add store to indicate app unlock ([cf5f16a](https://github.com/SrsSec/SrsPass-pwa/commit/cf5f16a3c92f3db2dd3f2b0b86b98efda9891f1d))
+* add title to decryptMnemonic textarea ([f482265](https://github.com/SrsSec/SrsPass-pwa/commit/f482265d4623456af9172aef89f4b44f27073c43))
+* clear all local storage on encrypt mnemonic step ([1940da8](https://github.com/SrsSec/SrsPass-pwa/commit/1940da8e1b8eeb0bf546801aac1155743c7ae3b6))
+* disable import btn on click ([2d758e4](https://github.com/SrsSec/SrsPass-pwa/commit/2d758e42018a78221407e3f58c504f7474c64ccd))
+* improve input ux ([5ad155a](https://github.com/SrsSec/SrsPass-pwa/commit/5ad155a3c4109c022038665f4e04e0da45099251))
+* improve nav modal, in prep for menu ([0737192](https://github.com/SrsSec/SrsPass-pwa/commit/0737192747f425f3cb3ae0a5ec6d95f711d7913f))
+* improve setup texts for new setup flows ([1238da6](https://github.com/SrsSec/SrsPass-pwa/commit/1238da64a042fecdf96001130cb93a33a412b92e))
+* pre-release multiple setup flows ([96b0785](https://github.com/SrsSec/SrsPass-pwa/commit/96b0785b7ac5dbaf883c89e8db58d175240e647e))
+* provide users with 3 improved setup options ([994e418](https://github.com/SrsSec/SrsPass-pwa/commit/994e41886408efc005534f8b43fdaeba5644a737))
+* require dbl click to exit modal boundaries to improve ux ([59275f1](https://github.com/SrsSec/SrsPass-pwa/commit/59275f1c8a7af887403b11afada2bb387a2cb1f9))
+* save & encrypt backup phrase if necessary ([423dc4a](https://github.com/SrsSec/SrsPass-pwa/commit/423dc4a2c4300ec595a176c74ec3947c2936227f))
+
+
+### Bug Fixes
+
+* 2nd media match should be coarse, not fine ([b149446](https://github.com/SrsSec/SrsPass-pwa/commit/b149446a03094fc3c2bfd1a8d589c7306f04e83c))
+* childPassesHtml to actually be plural ([7db32a0](https://github.com/SrsSec/SrsPass-pwa/commit/7db32a0c4c4518d5d2bc882a6a4d304c4709604b))
+* incorrect use of clear, replaced with removeItem ([22343bc](https://github.com/SrsSec/SrsPass-pwa/commit/22343bc8dd42a1caec4749578a5c668d5fd3c4f9))
+* nav keys not working on encrypt modal ([84fe338](https://github.com/SrsSec/SrsPass-pwa/commit/84fe338dcd6089028f200f8cd7fadf5969134c05))
+* properly overwrite mnemonic for post verify backup phrase ([594f87c](https://github.com/SrsSec/SrsPass-pwa/commit/594f87ce756b368acefed460d2b34001c72bf02e))
+* rm forced delay on setup prompt ([c424f09](https://github.com/SrsSec/SrsPass-pwa/commit/c424f0919baec58952503b2a07483274f83add4b))
+* tooltips on mobile ([06504cc](https://github.com/SrsSec/SrsPass-pwa/commit/06504cc3550d6612b008f69faf6088f654f867ad))
+* unblur not working due to disabled ([f12d09f](https://github.com/SrsSec/SrsPass-pwa/commit/f12d09f7b54f47037cd9912ba5ec3d3728937e5b))
+
 ### [0.2.6](https://github.com/SrsSec/SrsPass-pwa/compare/v0.2.5...v0.2.6) (2021-04-26)
 
 
