@@ -8,6 +8,12 @@
 
   // when selection is closed, begin selected setup process
   $: showProcess = !showSelect
+  $: {
+    if (showProcess && !window.SrsPassAppProps?.setupOption) {
+      window.SrsPassAppProps.setupOption = { readableValue: setupOption }
+      Object.freeze(window.SrsPassAppProps.setupOption)
+    }
+  }
 </script>
 
 <SelectSetup bind:setupOption={setupOption} bind:show={showSelect} />

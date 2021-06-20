@@ -18,6 +18,9 @@ zxcvbn.js bundled and minified is about 400kB gzipped or 820kB uncompressed, mos
     focus: true
   }
 
+  const setupOption = window.SrsPassAppProps.setupOption.readableValue
+  const adjective = setupOption === 'existing' ? 'existing' : 'desired'
+
   onMount(() => {
     // NOTE: be sure to update this if unlock pass element tag is changed
     disableAnnoyingMobileInputBugs()
@@ -75,9 +78,10 @@ zxcvbn.js bundled and minified is about 400kB gzipped or 820kB uncompressed, mos
     showPass ? passInputDOM.setAttribute('type', 'text') : passInputDOM.setAttribute('type', 'password'))
 </script>
 
-<p>Please type your desired {@html passHtml}.</p>
-<p>You will need it to unlock the interface whenever you use this app, so this should be memorizable, and is the only password you have to remember.</p>
-<!--><textarea class:red-border="{mnemonicUser.length > 0 && !isMnemonicUserValid}" placeholder="Enter your {passTerm} here..." bind:value={mnemonicUser}/><-->
+<p>Please type your {adjective} {@html passHtml}.</p>
+{#if setupOption !== 'existing'}
+  <p>You will need it to unlock the interface whenever you use this app, so this should be memorizable, and is the only password you have to remember.</p>
+{/if}
 <br/>
 <input id="encryptInputPass"
        autofocus

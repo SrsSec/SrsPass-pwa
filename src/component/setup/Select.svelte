@@ -6,7 +6,7 @@
   // string means it is dynamically loaded
   const steps = [
     WelcomeDescription,
-    'SetupMsg',
+    'ChooseSetup',
   ]
 
   export let show, setupOption, childProps

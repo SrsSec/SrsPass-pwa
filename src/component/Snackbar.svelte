@@ -19,8 +19,8 @@
   transform: translateX(-50%);
   margin-right: 3rem;
   bottom: 4rem;
-  -webkit-animation: fadeinout 8s linear forwards;
-  animation: fadeinout 8s linear forwards;
+  -webkit-animation: fadeinout 10s linear forwards;
+  animation: fadeinout 10s linear forwards;
 }
 
 @-webkit-keyframes fadeinout {
