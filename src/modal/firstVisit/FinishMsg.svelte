@@ -19,7 +19,7 @@
   <p>If you would like to generate these passwords on another device, simply run through the setup using the same
   {@html mnemonicHtml} and {@html passHtml}.</p>
 {:else if setupOption === 'quick'}
-  <p>You can start using the app now. During the app use, you will be requested to safely store and then verify your {@html mnemonicHtml}, at your leisure. Both it and your {@html passHtml} are needed to recover your passwords for device migration.</p>
+  <p>You can start using the app now. During its use, you'll be notified to safely store and then verify your {@html mnemonicHtml}. You can do it anytime in the future. Both it and your {@html passHtml} are needed to recover your passwords for device migration.</p>
 {:else if setupOption === 'existing'}
   <p>Welcome back!!</p>
 {/if}
